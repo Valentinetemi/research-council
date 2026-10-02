@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f5f4ef" />
+    <meta name="description" content="Research Council — evidence-led technical research investigations." />
+    <title>Research Council</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#" data-action="home" aria-label="Research Council home">
+        <span class="brand-mark" aria-hidden="true">RC</span>
+        <span class="brand-copy">
+          <strong>Research Council</strong>
+          <small>Evidence, examined.</small>
+        </span>
+      </a>
+      <nav class="top-nav" aria-label="Primary navigation">
+        <button class="nav-link active" type="button" data-action="home">New investigation</button>
+        <button class="nav-link" type="button" data-action="archive">Archive <span id="archive-count">—</span></button>
+      </nav>
+      <div class="system-status" aria-label="System status">
+        <span class="status-dot"></span>
+        Council ready
+      </div>
+    </header>
+
+    <main>
+      <section class="home-view" id="home-view">
+        <div class="home-grid">
+          <aside class="section-index" aria-hidden="true">
+            <span>01</span>
+            <i></i>
+            <span>INQUIRE</span>
+          </aside>
+
+          <div class="inquiry-column">
+            <p class="eyebrow"><span>Independent analysis</span><span>Source-grounded</span><span>Deterministically verified</span></p>
+            <h1>What are you trying<br />to <em>determine?</em></h1>
+            <p class="intro">Ask a technical question. Four research agents examine the literature, an auditor verifies every citation, and a Judge reports only what the evidence supports.</p>
+
+            <form class="question-form" id="question-form">
+              <label for="question">Research question</label>
+              <textarea id="question" name="question" rows="5" maxlength="2000" placeholder="e.g. Does structured graph memory outperform simple caption memory for long-term video memory?" required></textarea>
+              <div class="composer-footer">
+                <div class="composer-hint">
+                  <span class="keycap">⌘</span><span class="keycap">↵</span>
+                  <span>to run council</span>
+                </div>
+                <button class="primary-button" type="submit">
+                  <span>Run council</span>
+                  <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5" /></svg>
+                </button>
+              </div>
+            </form>
+
+            <div class="suggestions" aria-label="Example research questions">
+              <span>Try an inquiry</span>
+              <button type="button" data-question="Does structured graph memory outperform simple caption memory for long-term video memory?">Graph vs. caption memory</button>
+              <button type="button" data-question="Which memory architectures perform best on long-horizon multimodal benchmarks?">Long-horizon benchmarks</button>
+            </div>
+          </div>
+
+          <aside class="knowledge-card" aria-label="Knowledge base status">
+            <div class="knowledge-heading">
+              <span class="mini-icon" aria-hidden="true">
+                <svg viewBox="0 0 20 20"><path d="M3.5 5.5 10 2l6.5 3.5L10 9 3.5 5.5Z"/><path d="m3.5 9 6.5 3.5L16.5 9M3.5 12.5 10 16l6.5-3.5"/></svg>
+              </span>
+              <span>Knowledge base</span>
+            </div>
+            <strong id="source-count">—</strong>
+            <span class="knowledge-unit">retrieved sources</span>
+            <div class="knowledge-rule"></div>
+            <div class="knowledge-meta">
+              <span>Research areas</span>
+              <div id="research-areas"><span class="skeleton small"></span></div>
+            </div>
+            <div class="knowledge-sync"><span></span>Available for retrieval</div>
+          </aside>
+        </div>
+
+        <section class="recent-section" id="recent-section">
+          <div class="section-title-row">
+            <div>
+              <span class="section-number">02</span>
+              <h2>Recent investigations</h2>
+            </div>
+            <button type="button" class="text-button" data-action="archive">View archive <span>↗</span></button>
+          </div>
+          <div class="run-list" id="run-list" aria-live="polite">
+            <div class="run-skeleton"><span></span><span></span><span></span></div>
+          </div>
+        </section>
+      </section>
+
+      <section class="investigation-view hidden" id="investigation-view">
+        <div class="report-topbar">
+          <button class="back-button" type="button" data-action="home">
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m12 4-6 6 6 6" /></svg>
+            New investigation
+          </button>
+          <div class="report-id" id="report-id">INVESTIGATION / —</div>
+          <button class="icon-button" type="button" id="copy-link" aria-label="Copy report link" title="Copy report link">
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7.5 12.5 12.5 7.5M6.4 8.7 4.6 10.5a3.2 3.2 0 0 0 4.5 4.5l1.8-1.8M13.6 11.3l1.8-1.8A3.2 3.2 0 0 0 10.9 5L9.1 6.8" /></svg>
+          </button>
+        </div>
+
+        <section class="running-panel" id="running-panel" aria-live="polite">
+          <div class="running-copy">
+            <p class="eyebrow">Council in session</p>
+            <h1 id="running-question">Preparing investigation…</h1>
+            <p>The council is retrieving sources, testing competing readings, and checking each factual claim against its cited text.</p>
+          </div>
+          <div class="run-progress">
+            <div class="progress-heading">
+              <span>Live process</span>
+              <span id="progress-count">0 / 7 complete</span>
+            </div>
+            <div class="stages" id="stages"></div>
+            <div class="run-note"><span class="pulse"></span><span id="run-note">Searching the knowledge base…</span></div>
+          </div>
+        </section>
+
+        <section class="report hidden" id="report">
+          <aside class="report-nav" aria-label="Report contents">
+            <span class="report-nav-label">Report contents</span>
+            <a href="#summary" class="active"><span>01</span>Verdict</a>
+            <a href="#graph"><span>02</span>Investigation graph</a>
+            <a href="#evidence"><span>03</span>Evidence</a>
+            <a href="#conflicts"><span>04</span>Conflicts</a>
+            <a href="#questions"><span>05</span>Open questions</a>
+            <a href="#sources"><span>06</span>Sources</a>
+            <a href="#record"><span>07</span>Council record</a>
+          </aside>
+
+          <article class="report-content">
+            <section class="report-summary" id="summary">
+              <div class="report-kicker">
+                <span>Investigation report</span>
+                <time id="report-date"></time>
+              </div>
+              <h1 id="report-question"></h1>
+              <div class="verdict-block" id="verdict-block">
+                <div class="verdict-label">
+                  <span>Judge verdict</span>
+                  <strong id="verdict-text"></strong>
+                </div>
+                <div class="verdict-reason">
+                  <p id="judge-reasoning"></p>
+                  <div class="verdict-metrics" id="verdict-metrics"></div>
+                </div>
+              </div>
+            </section>
+
+            <section class="report-section investigation-graph-section" id="graph">
+              <div class="report-section-heading graph-section-heading">
+                <div><span>02</span><h2>Investigation graph</h2></div>
+                <p>Trace how retrieved papers moved through the council, became claims, passed verification, and informed the final verdict.</p>
+              </div>
+              <div class="graph-frame" id="graph-frame">
+                <div class="graph-toolbar">
+                  <div class="graph-legend" aria-label="Graph legend">
+                    <span><i class="legend-dot source"></i>Source</span>
+                    <span><i class="legend-dot agent"></i>Agent</span>
+                    <span><i class="legend-dot verified"></i>Verified</span>
+                    <span><i class="legend-dot rejected"></i>Rejected</span>
+                    <span><i class="legend-line conflict"></i>Conflict</span>
+                  </div>
+                  <span class="graph-hint">Hover to trace · Select to inspect</span>
+                </div>
+                <div class="graph-scroll">
+                  <div class="graph-canvas" id="graph-canvas">
+                    <svg class="graph-edges" id="graph-edges" viewBox="0 0 1000 780" preserveAspectRatio="none" aria-hidden="true"></svg>
+                    <div class="graph-nodes" id="graph-nodes"></div>
+                    <aside class="graph-inspector hidden" id="graph-inspector" aria-live="polite">
+                      <div class="graph-inspector-head">
+                        <div><span id="graph-inspector-kind"></span><strong id="graph-inspector-title"></strong></div>
+                        <button type="button" id="close-graph-inspector" aria-label="Close graph details">×</button>
+                      </div>
+                      <div class="graph-inspector-body" id="graph-inspector-body"></div>
+                    </aside>
+                  </div>
+                </div>
+                <div class="graph-caption">
+                  <span id="graph-summary">Building evidence graph…</span>
+                  <span>Relationships reflect this investigation only</span>
+                </div>
+              </div>
+            </section>
+
+            <section class="report-section" id="evidence">
+              <div class="report-section-heading">
+                <div><span>03</span><h2>Evidence</h2></div>
+                <p>Claims are accepted only when every cited quote exists in the retrieved source and every reported number appears in that quote.</p>
+              </div>
+              <div class="evidence-list" id="evidence-list"></div>
+            </section>
+
+            <section class="report-section" id="conflicts">
+              <div class="report-section-heading">
+                <div><span>04</span><h2>Conflicting evidence</h2></div>
+                <p>Related results that may appear comparable at first glance, with the experimental differences made explicit.</p>
+              </div>
+              <div class="conflict-list" id="conflict-list"></div>
+            </section>
+
+            <section class="report-section" id="questions">
+              <div class="report-section-heading">
+                <div><span>05</span><h2>Open questions</h2></div>
+                <p>Questions the current evidence cannot resolve. Absence of evidence is not treated as a negative result.</p>
+              </div>
+              <ol class="question-list" id="question-list"></ol>
+            </section>
+
+            <section class="report-section" id="sources">
+              <div class="report-section-heading">
+                <div><span>06</span><h2>Sources</h2></div>
+                <p>Every knowledge-base entry retrieved for this investigation, ordered by relevance.</p>
+              </div>
+              <div class="source-list" id="source-list"></div>
+            </section>
+
+            <section class="report-section" id="record">
+              <div class="report-section-heading">
+                <div><span>07</span><h2>Council record</h2></div>
+                <p>Agent conclusions are retained for auditability, without crowding the primary verdict.</p>
+              </div>
+              <div class="agent-list" id="agent-list"></div>
+            </section>
+          </article>
+        </section>
+      </section>
+    </main>
+
+    <aside class="council-glass hidden" id="council-glass" aria-live="polite" aria-label="Live council activity">
+      <div class="glass-refraction" aria-hidden="true"></div>
+      <div class="council-glass-head">
+        <div>
+          <span>Council activity</span>
+          <strong id="glass-stage">Preparing investigation</strong>
+        </div>
+        <span class="glass-progress" id="glass-progress">0 / 7</span>
+      </div>
+      <div class="agent-field" id="agent-field" aria-label="Four research agents working in parallel">
+        <span class="convergence-line line-a" aria-hidden="true"></span>
+        <span class="convergence-line line-b" aria-hidden="true"></span>
+        <span class="convergence-line line-c" aria-hidden="true"></span>
+        <span class="convergence-line line-d" aria-hidden="true"></span>
+        <span class="judge-node" aria-hidden="true"><i>J</i></span>
+        <span class="agent-node agent-a" data-glass-agent="researcher-a"><i>A</i><b>Researcher A</b></span>
+        <span class="agent-node agent-b" data-glass-agent="researcher-b"><i>B</i><b>Researcher B</b></span>
+        <span class="agent-node agent-c" data-glass-agent="contradiction-hunter"><i>C</i><b>Contradiction</b></span>
+        <span class="agent-node agent-d" data-glass-agent="evidence-auditor"><i>E</i><b>Auditor</b></span>
+      </div>
+      <div class="glass-foot">
+        <span class="glass-live"><i></i>Live</span>
+        <button type="button" id="view-process">View process <span>↗</span></button>
+      </div>
+    </aside>
+
+    <dialog class="evidence-dialog glass-sheet" id="evidence-dialog">
+      <div class="glass-refraction" aria-hidden="true"></div>
+      <div class="dialog-bar">
+        <div><span id="evidence-dialog-label">Verified claim</span><strong id="evidence-dialog-title"></strong></div>
+        <button class="icon-button" id="close-evidence-dialog" aria-label="Close evidence">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m5 5 10 10M15 5 5 15" /></svg>
+        </button>
+      </div>
+      <div class="evidence-dialog-body">
+        <p class="evidence-dialog-claim" id="evidence-dialog-claim"></p>
+        <div class="evidence-dialog-meta" id="evidence-dialog-meta"></div>
+        <div class="evidence-dialog-proofs" id="evidence-dialog-proofs"></div>
+      </div>
+    </dialog>
+
+    <dialog class="source-dialog" id="source-dialog">
+      <div class="glass-refraction" aria-hidden="true"></div>
+      <div class="dialog-bar">
+        <div><span>Knowledge-base source</span><strong id="dialog-title"></strong></div>
+        <button class="icon-button" id="close-dialog" aria-label="Close source">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m5 5 10 10M15 5 5 15" /></svg>
+        </button>
+      </div>
+      <pre id="dialog-content"></pre>
+    </dialog>
+
+    <div class="toast" id="toast" role="status"></div>
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>

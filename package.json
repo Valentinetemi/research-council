@@ -1,0 +1,23 @@
+{
+  "name": "research-council",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "tsx --env-file=.env src/index.ts",
+    "web": "tsx --env-file=.env src/server.ts",
+    "typecheck": "tsc --noEmit",
+    "replay": "tsx src/index.ts --replay"
+  },
+  "dependencies": {
+    "@ai-sdk/google": "^3.0.130",
+    "@ai-sdk/mcp": "^1.0.90",
+    "ai": "^6.0.300",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.43",
+    "tsx": "^4.23.15",
+    "typescript": "^5.9.3"
+  }
+}

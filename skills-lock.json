@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "skills": {
+    "create-agent-with-sanity-context": {
+      "source": "sanity-io/context",
+      "sourceType": "github",
+      "skillPath": "skills/create-agent-with-sanity-context/SKILL.md",
+      "computedHash": "42f13f77bad0d281dcd9ece9ae539b6c7ab0e769ed0116cd10a79f5ff317cfdd"
+    },
+    "dial-your-context": {
+      "source": "sanity-io/context",
+      "sourceType": "github",
+      "skillPath": "skills/dial-your-context/SKILL.md",
+      "computedHash": "4d7adba056079599761caca6dcc012df8673da102a97de1cbd8f4c310dea4db7"
+    },
+    "shape-your-agent": {
+      "source": "sanity-io/context",
+      "sourceType": "github",
+      "skillPath": "skills/shape-your-agent/SKILL.md",
+      "computedHash": "ebf25cd70dd086cd913a6adb50774fabe517ac2f0ff6ef74fbd33562c6dc5449"
+    }
+  }
+}
