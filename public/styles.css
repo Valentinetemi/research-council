@@ -680,13 +680,17 @@ button {
 
 .running-panel {
   display: grid;
-  grid-template-columns: minmax(350px, 1fr) minmax(380px, 590px);
-  gap: 9vw;
-  max-width: 1210px;
+  grid-template-columns: minmax(0, 1.18fr) minmax(380px, .82fr);
+  gap: clamp(44px, 6vw, 88px);
+  max-width: 1380px;
   min-height: calc(100vh - 128px);
   margin: 0 auto;
-  padding: 100px 48px;
+  padding: 88px 48px;
   align-items: center;
+}
+
+.running-copy {
+  min-width: 0;
 }
 
 .running-copy .eyebrow {
@@ -694,8 +698,10 @@ button {
 }
 
 .running-copy h1 {
-  font-size: clamp(36px, 4vw, 58px);
+  max-width: 760px;
+  font-size: clamp(38px, 3.2vw, 46px);
   line-height: 1.08;
+  text-wrap: balance;
 }
 
 .running-copy > p:last-child {
@@ -2304,7 +2310,8 @@ button {
   }
 
   .running-panel {
-    gap: 6vw;
+    grid-template-columns: minmax(0, 1.1fr) minmax(360px, .9fr);
+    gap: clamp(36px, 5vw, 56px);
   }
 
   .outside-panel {
@@ -2450,7 +2457,8 @@ button {
   }
 
   .running-copy h1 {
-    font-size: 38px;
+    font-size: clamp(30px, 7.8vw, 36px);
+    line-height: 1.1;
   }
 
   .run-progress {
