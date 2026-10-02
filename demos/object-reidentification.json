@@ -1,0 +1,876 @@
+{
+  "schemaVersion": 1,
+  "slug": "object-reidentification",
+  "title": "Recognizing a previously seen physical object",
+  "description": "Tracking, visual re-identification, spatial context and episodic memory in wearable systems.",
+  "report": {
+    "createdAt": "2026-10-02T14:47:56.757Z",
+    "question": "For a wearable egocentric-memory system, how can I determine whether an object observed now is the same physical object seen earlier after it disappears and later re-enters view? Compare approaches using tracking, visual embeddings/re-identification, spatial context, and episodic memory. Cite evidence for each recommendation",
+    "model": "gemini-3.5-flash-lite",
+    "verdict": "yes",
+    "verdictLabel": "Supported",
+    "reasoning": "For a wearable egocentric-memory system, determining whether an observed object is the same physical object seen earlier after re-entering view requires combining multiple complementary mechanisms. Tracking approaches like EgoSTARK maintain object tracklets even when hands leave the field of view by terminating only after 20 consecutive frames with a free hand. Visual re-identification employs DINOv2 visual features averaged over tracklet frames, matching them to stored instances via cosine similarity using a threshold of 0.6. Spatial context and object permanence reasoning are critical because visual-language models often fail by treating non-visibility as non-existence, incorrectly assuming objects leaving the camera field of view are absent rather than off-screen. Finally, episodic memory architectures and frameworks like VQLoC leverage shared DINO-pretrained ViT-B14 backbones and spatial cross-attention transformers to localize recent spatio-temporal occurrences of visual queries.",
+    "openQuestions": [
+      "How can we minimize false re-identifications when multiple visually similar objects (e.g., identical coffee mugs) re-enter the camera's field of view in different locations?",
+      "What is the optimal balance between online tracking termination thresholds and long-horizon episodic graph retrieval to avoid state drift?"
+    ],
+    "counts": {
+      "sources": 5,
+      "claims": 23,
+      "verified": 19,
+      "rejected": 4,
+      "judgeVerified": 5
+    },
+    "claims": [
+      {
+        "claim": {
+          "claim": "For a wearable egocentric-memory system, tracking approaches like AMEGO's EgoSTARK single-object tracker extend object tracklets even when hands leave the field of view, terminating after 20 consecutive frames with a free hand.",
+          "sources": [
+            {
+              "path": "memory_architectures",
+              "quote": "Updating — an EgoSTARK single-object tracker (SOT) extends the track even when hands leave the field of view, terminating after eₒ = 20 consecutive frames with a free hand"
+            }
+          ]
+        },
+        "verified": true,
+        "sources": [
+          {
+            "path": "memory_architectures",
+            "quote": "Updating — an EgoSTARK single-object tracker (SOT) extends the track even when hands leave the field of view, terminating after eₒ = 20 consecutive frames with a free hand",
+            "found": true
+          }
+        ],
+        "numbers": [
+          "20"
+        ],
+        "missingNumbers": [],
+        "reasons": [],
+        "id": "claim-01",
+        "contributedBy": [
+          "Researcher A"
+        ]
+      },
+      {
+        "claim": {
+          "claim": "To re-identify observed objects via visual embeddings, AMEGO averages DINOv2 visual features over tracklet frames and computes cosine similarity against stored instances using a threshold of 0.6.",
+          "sources": [
+            {
+              "path": "memory_architectures",
+              "quote": "Assignment — visual features (DINOv2, γ) are averaged over tracklet frames; cosine similarity to stored instances assigns the tracklet to an existing object ID (threshold θ = 0.6) or creates a new one"
+            }
+          ]
+        },
+        "verified": true,
+        "sources": [
+          {
+            "path": "memory_architectures",
+            "quote": "Assignment — visual features (DINOv2, γ) are averaged over tracklet frames; cosine similarity to stored instances assigns the tracklet to an existing object ID (threshold θ = 0.6) or creates a new one",
+            "found": true
+          }
+        ],
+        "numbers": [
+          "0.6"
+        ],
+        "missingNumbers": [],
+        "reasons": [],
+        "id": "claim-02",
+        "contributedBy": [
+          "Researcher A"
+        ]
+      },
+      {
+        "claim": {
+          "claim": "For visual query localization of objects in egocentric video, VQLoC achieves 0.31 val tAP25 and 47.05% val recall on the Ego4D VQ2D benchmark.",
+          "sources": [
+            {
+              "path": "object_identity_tracking",
+              "quote": "VQLoC | 0.31 | 0.22 | 47.05 | 55.89 | 0.32 | 0.24 | 36"
+            }
+          ],
+          "result": {
+            "benchmark": "Ego4D VQ2D",
+            "dataset": "Val",
+            "model": "VQLoC",
+            "metric": "tAP25"
+          }
+        },
+        "verified": true,
+        "sources": [
+          {
+            "path": "object_identity_tracking",
+            "quote": "VQLoC | 0.31 | 0.22 | 47.05 | 55.89 | 0.32 | 0.24 | 36",
+            "found": true
+          }
+        ],
+        "numbers": [
+          "0.31",
+          "47.05"
+        ],
+        "missingNumbers": [],
+        "reasons": [],
+        "id": "claim-03",
+        "contributedBy": [
+          "Researcher A"
+        ]
+      },
+      {
+        "claim": {
+          "claim": "In spatial context reasoning, models often fail to maintain persistent object memory, incorrectly inferring that objects leaving the camera field of view are absent rather than off-screen.",
+          "sources": [
+            {
+              "path": "benchmarks/video_understanding/spatial_reasoning",
+              "quote": "Finding 3 — Failure to maintain persistent object memory. Models treat non-visibility as non-existence: objects that leave the camera's field of view are incorrectly inferred to be absent rather than merely off-screen."
+            }
+          ]
+        },
+        "verified": true,
+        "sources": [
+          {
+            "path": "benchmarks/video_understanding/spatial_reasoning",
+            "quote": "Finding 3 — Failure to maintain persistent object memory. Models treat non-visibility as non-existence: objects that leave the camera's field of view are incorrectly inferred to be absent rather than merely off-screen.",
+            "found": true
+          }
+        ],
+        "numbers": [],
+        "missingNumbers": [],
+        "reasons": [],
+        "id": "claim-04",
+        "contributedBy": [
+          "Researcher A"
+        ]
+      },
+      {
+        "claim": {
+          "claim": "Episodic memory architectures like WorldMM organize multi-scale episodic knowledge graphs to represent factual events and entity-action-entity triplets across temporal scales.",
+          "sources": [
+            {
+              "path": "memory_architectures",
+              "quote": "Episodic | Set of Knowledge Graphs Mₑ = {G_t0 … G_tN} | Multiple scales (e.g., 30 s, 3 min, 10 min, 1 h for EgoLifeQA) | Factual events, entity-action-entity triplets"
+            }
+          ]
+        },
+        "verified": true,
+        "sources": [
+          {
+            "path": "memory_architectures",
+            "quote": "Episodic | Set of Knowledge Graphs Mₑ = {G_t0 … G_tN} | Multiple scales (e.g., 30 s, 3 min, 10 min, 1 h for EgoLifeQA) | Factual events, entity-action-entity triplets",
+            "found": true
+          }
+        ],
+        "numbers": [],
+        "missingNumbers": [],
+        "reasons": [],
+        "id": "claim-05",
+        "contributedBy": [
+          "Researcher A"
+        ]
+      },
+      {
+        "claim": {
+          "claim": "Visual embeddings and appearance features extracted via DINOv2 or SWAG can be matched to stored instances using cosine similarity to assign tracklets to existing object IDs or retrieve temporal intervals in egocentric memory systems.",
+          "sources": [
+            {
+              "path": "memory_architectures",
+              "quote": "Assignment — visual features (DINOv2, γ) are averaged over tracklet frames; cosine similarity to stored instances assigns the tracklet to an existing object ID (threshold θ = 0.6) or creates a new one [2]."
+            }
+          ]
+        },
+        "verified": true,
+        "sources": [
+          {
+            "path": "memory_architectures",
+            "quote": "Assignment — visual features (DINOv2, γ) are averaged over tracklet frames; cosine similarity to stored instances assigns the tracklet to an existing object ID (threshold θ = 0.6) or creates a new one [2].",
+            "found": true
+          }
+        ],
+        "numbers": [],
+        "missingNumbers": [],
+        "reasons": [],
+        "id": "claim-06",
+        "contributedBy": [
+          "Researcher B"
+        ]
+      },
+      {
+        "claim": {
+          "claim": "Single-object trackers, such as EgoSTARK, can extend object tracklets even when hands leave the field of view, terminating only after a set threshold of consecutive frames with a free hand.",
+          "sources": [
+            {
+              "path": "memory_architectures",
+              "quote": "Updating — an EgoSTARK single-object tracker (SOT) extends the track even when hands leave the field of view, terminating after eₒ = 20 consecutive frames with a free hand; [2]."
+            }
+          ]
+        },
+        "verified": false,
+        "sources": [
+          {
+            "path": "memory_architectures",
+            "quote": "Updating — an EgoSTARK single-object tracker (SOT) extends the track even when hands leave the field of view, terminating after eₒ = 20 consecutive frames with a free hand; [2].",
+            "found": false,
+            "reason": "quote not found in entry \"memory_architectures\""
+          }
+        ],
+        "numbers": [],
+        "missingNumbers": [],
+        "reasons": [
+          "quote not found in entry \"memory_architectures\""
+        ],
+        "id": "claim-07",
+        "contributedBy": [
+          "Researcher B"
+        ]
+      },
+      {
+        "claim": {
+          "claim": "End-to-end frameworks like VQLoC use spatial cross-attention transformers and spatio-temporal self-attention to localize the most-recent spatio-temporal occurrence of a visual query in egocentric video, achieving 0.31 tAP25 on validation and 36 FPS.",
+          "sources": [
+            {
+              "path": "object_identity_tracking",
+              "quote": "VQLoC (Visual Query Localization from Correspondence) is a single-stage, end-to-end trainable framework for answering \"where did I last see object X?\" in long-form egocentric video [1]."
+            },
+            {
+              "path": "object_identity_tracking",
+              "quote": "| VQLoC | 0.31 | 0.22 | 47.05 | 55.89 | 0.32 | 0.24 | 36 |"
+            }
+          ],
+          "result": {
+            "benchmark": "Ego4D VQ2D",
+            "dataset": "Val",
+            "model": "VQLoC",
+            "metric": "tAP25"
+          }
+        },
+        "verified": true,
+        "sources": [
+          {
+            "path": "object_identity_tracking",
+            "quote": "VQLoC (Visual Query Localization from Correspondence) is a single-stage, end-to-end trainable framework for answering \"where did I last see object X?\" in long-form egocentric video [1].",
+            "found": true
+          },
+          {
+            "path": "object_identity_tracking",
+            "quote": "| VQLoC | 0.31 | 0.22 | 47.05 | 55.89 | 0.32 | 0.24 | 36 |",
+            "found": true
+          }
+        ],
+        "numbers": [
+          "0.31",
+          "36"
+        ],
+        "missingNumbers": [],
+        "reasons": [],
+        "id": "claim-08",
+        "contributedBy": [
+          "Researcher B"
+        ]
+      },
+      {
+        "claim": {
+          "claim": "Multimodal foundation models often fail to maintain persistent object memory, incorrectly treating non-visibility as non-existence when objects leave the camera field of view.",
+          "sources": [
+            {
+              "path": "benchmarks/video_understanding/spatial_reasoning",
+              "quote": "Finding 3 — Failure to maintain persistent object memory. Models treat non-visibility as non-existence: objects that leave the camera's field of view are incorrectly inferred to be absent rather than merely off-screen. Models rely on view-dependent evidence rather than a persistent world-state representation [2]."
+            }
+          ]
+        },
+        "verified": true,
+        "sources": [
+          {
+            "path": "benchmarks/video_understanding/spatial_reasoning",
+            "quote": "Finding 3 — Failure to maintain persistent object memory. Models treat non-visibility as non-existence: objects that leave the camera's field of view are incorrectly inferred to be absent rather than merely off-screen. Models rely on view-dependent evidence rather than a persistent world-state representation [2].",
+            "found": true
+          }
+        ],
+        "numbers": [],
+        "missingNumbers": [],
+        "reasons": [],
+        "id": "claim-09",
+        "contributedBy": [
+          "Researcher B"
+        ]
+      },
+      {
+        "claim": {
+          "claim": "Episodic memory architectures like WorldMM construct multi-scale knowledge graphs consisting of entity-action-entity triplets across multiple temporal scales to capture factual events over time.",
+          "sources": [
+            {
+              "path": "memory_architectures",
+              "quote": "Episodic | Set of Knowledge Graphs Mₑ = {G_t0 … G_tN} | Multiple scales (e.g., 30 s, 3 min, 10 min, 1 h for EgoLifeQA) | Factual events, entity-action-entity triplets |"
+            }
+          ]
+        },
+        "verified": true,
+        "sources": [
+          {
+            "path": "memory_architectures",
+            "quote": "Episodic | Set of Knowledge Graphs Mₑ = {G_t0 … G_tN} | Multiple scales (e.g., 30 s, 3 min, 10 min, 1 h for EgoLifeQA) | Factual events, entity-action-entity triplets |",
+            "found": true
+          }
+        ],
+        "numbers": [],
+        "missingNumbers": [],
+        "reasons": [],
+        "id": "claim-10",
+        "contributedBy": [
+          "Researcher B"
+        ]
+      },
+      {
+        "claim": {
+          "claim": "For spatio-temporal tracking, AMEGO extends single-object trackers when hands leave the field of view and terminates after 20 consecutive frames with a free hand.",
+          "sources": [
+            {
+              "path": "memory_architectures",
+              "quote": "— an EgoSTARK single-object tracker (SOT) extends the track even when hands leave the field of view, terminating after eₒ = 20 consecutive frames with a free hand;"
+            }
+          ]
+        },
+        "verified": true,
+        "sources": [
+          {
+            "path": "memory_architectures",
+            "quote": "— an EgoSTARK single-object tracker (SOT) extends the track even when hands leave the field of view, terminating after eₒ = 20 consecutive frames with a free hand;",
+            "found": true
+          }
+        ],
+        "numbers": [
+          "20"
+        ],
+        "missingNumbers": [],
+        "reasons": [],
+        "id": "claim-11",
+        "contributedBy": [
+          "Contradiction Hunter"
+        ]
+      },
+      {
+        "claim": {
+          "claim": "For visual embeddings and re-identification, AMEGO averages visual features over tracklet frames using DINOv2 and matches cosine similarity to stored instances using a threshold of 0.6.",
+          "sources": [
+            {
+              "path": "memory_architectures",
+              "quote": "— assignment visual features (DINOv2, γ) are averaged over tracklet frames; cosine similarity to stored instances assigns the tracklet to an existing object ID (threshold θ = 0.6) or creates a new one [2]."
+            }
+          ]
+        },
+        "verified": false,
+        "sources": [
+          {
+            "path": "memory_architectures",
+            "quote": "— assignment visual features (DINOv2, γ) are averaged over tracklet frames; cosine similarity to stored instances assigns the tracklet to an existing object ID (threshold θ = 0.6) or creates a new one [2].",
+            "found": false,
+            "reason": "quote not found in entry \"memory_architectures\""
+          }
+        ],
+        "numbers": [
+          "0.6"
+        ],
+        "missingNumbers": [
+          "0.6"
+        ],
+        "reasons": [
+          "quote not found in entry \"memory_architectures\"",
+          "number 0.6 in the claim does not appear in any verified quote"
+        ],
+        "id": "claim-12",
+        "contributedBy": [
+          "Contradiction Hunter"
+        ]
+      },
+      {
+        "claim": {
+          "claim": "For spatial context and object permanence, models fail by treating non-visibility as non-existence and incorrectly inferring that objects leaving the camera field of view are absent rather than off-screen.",
+          "sources": [
+            {
+              "path": "benchmarks/video_understanding/spatial_reasoning",
+              "quote": "Models treat non-visibility as non-existence: objects that leave the camera's field of view are incorrectly inferred to be absent rather than merely off-screen. Models rely on view-dependent evidence rather than a persistent world-state representation [2]."
+            }
+          ]
+        },
+        "verified": true,
+        "sources": [
+          {
+            "path": "benchmarks/video_understanding/spatial_reasoning",
+            "quote": "Models treat non-visibility as non-existence: objects that leave the camera's field of view are incorrectly inferred to be absent rather than merely off-screen. Models rely on view-dependent evidence rather than a persistent world-state representation [2].",
+            "found": true
+          }
+        ],
+        "numbers": [],
+        "missingNumbers": [],
+        "reasons": [],
+        "id": "claim-13",
+        "contributedBy": [
+          "Contradiction Hunter"
+        ]
+      },
+      {
+        "claim": {
+          "claim": "For episodic memory approaches, VQLoC localizes the most-recent spatio-temporal occurrence of an object as a response track using a shared DINO-pretrained ViT-B14 backbone and spatial cross-attention transformers.",
+          "sources": [
+            {
+              "path": "object_identity_tracking",
+              "quote": "VQLoC uses a shared DINO-pretrained ViT-B14 backbone to extract features for both the query crop and each video frame. A spatial cross-attention transformer establishes query-to-frame correspondences, updating frame features to identify query-relevant regions."
+            }
+          ],
+          "result": {
+            "benchmark": "Ego4D VQ2D",
+            "dataset": "Val",
+            "model": "VQLoC",
+            "metric": "stAP25"
+          }
+        },
+        "verified": true,
+        "sources": [
+          {
+            "path": "object_identity_tracking",
+            "quote": "VQLoC uses a shared DINO-pretrained ViT-B14 backbone to extract features for both the query crop and each video frame. A spatial cross-attention transformer establishes query-to-frame correspondences, updating frame features to identify query-relevant regions.",
+            "found": true
+          }
+        ],
+        "numbers": [],
+        "missingNumbers": [],
+        "reasons": [],
+        "id": "claim-14",
+        "contributedBy": [
+          "Contradiction Hunter"
+        ]
+      },
+      {
+        "claim": {
+          "claim": "VQLoC localizes the most-recent spatio-temporal occurrence of an object query using a shared DINO-pretrained ViT-B14 backbone and attention mechanisms, achieving 0.31 Val tAP25 and 36 FPS on the Ego4D VQ2D benchmark.",
+          "sources": [
+            {
+              "path": "object_identity_tracking",
+              "quote": "VQLoC uses a shared DINO-pretrained ViT-B14 backbone to extract features for both the query crop and each video frame."
+            },
+            {
+              "path": "object_identity_tracking",
+              "quote": "VQLoC outperforms prior methods by ~20% in accuracy and achieves 36 FPS (10× faster than stage-wise methods at ~3 FPS), and ranked first on the Ego4D VQ2D challenge leaderboard [1]."
+            }
+          ],
+          "result": {
+            "benchmark": "Ego4D VQ2D",
+            "dataset": "Val",
+            "model": "VQLoC",
+            "metric": "tAP25"
+          }
+        },
+        "verified": false,
+        "sources": [
+          {
+            "path": "object_identity_tracking",
+            "quote": "VQLoC uses a shared DINO-pretrained ViT-B14 backbone to extract features for both the query crop and each video frame.",
+            "found": true
+          },
+          {
+            "path": "object_identity_tracking",
+            "quote": "VQLoC outperforms prior methods by ~20% in accuracy and achieves 36 FPS (10× faster than stage-wise methods at ~3 FPS), and ranked first on the Ego4D VQ2D challenge leaderboard [1].",
+            "found": true
+          }
+        ],
+        "numbers": [
+          "0.31",
+          "36"
+        ],
+        "missingNumbers": [
+          "0.31"
+        ],
+        "reasons": [
+          "number 0.31 in the claim does not appear in any verified quote"
+        ],
+        "id": "claim-15",
+        "contributedBy": [
+          "Evidence Auditor"
+        ]
+      },
+      {
+        "claim": {
+          "claim": "AMEGO tracks objects using hand-object interaction tracklets assigned via DINOv2 visual features and cosine similarity with threshold 0.6, achieving 36.3% accuracy on the Active Memories Benchmark.",
+          "sources": [
+            {
+              "path": "memory_architectures",
+              "quote": "- Hand-Object Interaction (HOI) tracklets O: each tracklet oᵢ is a tuple (tₛ, tₑ, bₜ, h, id) — start/end frames, per-frame bounding boxes, hand side (left/right), and object instance ID."
+            },
+            {
+              "path": "memory_architectures",
+              "quote": "AMEGO achieves 36.3% accuracy on the Active Memories Benchmark (AMB) vs. ≈22% for semantic-QA baselines (+12.7% margin)."
+            }
+          ],
+          "result": {
+            "benchmark": "Active Memories Benchmark (AMB)",
+            "dataset": "100 EPIC-KITCHENS videos",
+            "model": "AMEGO",
+            "metric": "accuracy"
+          }
+        },
+        "verified": false,
+        "sources": [
+          {
+            "path": "memory_architectures",
+            "quote": "- Hand-Object Interaction (HOI) tracklets O: each tracklet oᵢ is a tuple (tₛ, tₑ, bₜ, h, id) — start/end frames, per-frame bounding boxes, hand side (left/right), and object instance ID.",
+            "found": true
+          },
+          {
+            "path": "memory_architectures",
+            "quote": "AMEGO achieves 36.3% accuracy on the Active Memories Benchmark (AMB) vs. ≈22% for semantic-QA baselines (+12.7% margin).",
+            "found": true
+          }
+        ],
+        "numbers": [
+          "0.6",
+          "36.3"
+        ],
+        "missingNumbers": [
+          "0.6"
+        ],
+        "reasons": [
+          "number 0.6 in the claim does not appear in any verified quote"
+        ],
+        "id": "claim-16",
+        "contributedBy": [
+          "Evidence Auditor"
+        ]
+      },
+      {
+        "claim": {
+          "claim": "WorldMM constructs an explicit visual memory using VLM2Vec embeddings and a frame-timestamp index, contributing to an average accuracy of 69.5% across multiple long video benchmarks.",
+          "sources": [
+            {
+              "path": "memory_architectures",
+              "quote": "Visual | Feature embeddings Mᶠᵥ + frame-timestamp index Mᴵᵥ | Short fixed segments tᵥ | Scene appearance, object details not representable in text |"
+            },
+            {
+              "path": "memory_architectures",
+              "quote": "WorldMM-GPT achieves 69.5% average accuracy across EgoLifeQA, Ego-R1 Bench, HippoVlog, LVBench, and Video-MME (Long), outperforming the next-best baseline (HippoRAG at 57.0%) by 8.4% [3]."
+            }
+          ],
+          "result": {
+            "benchmark": "Video-MME (Long)",
+            "dataset": "EgoLifeQA, Ego-R1 Bench, HippoVlog, LVBench, and Video-MME (Long)",
+            "model": "WorldMM-GPT",
+            "metric": "average accuracy"
+          }
+        },
+        "verified": true,
+        "sources": [
+          {
+            "path": "memory_architectures",
+            "quote": "Visual | Feature embeddings Mᶠᵥ + frame-timestamp index Mᴵᵥ | Short fixed segments tᵥ | Scene appearance, object details not representable in text |",
+            "found": true
+          },
+          {
+            "path": "memory_architectures",
+            "quote": "WorldMM-GPT achieves 69.5% average accuracy across EgoLifeQA, Ego-R1 Bench, HippoVlog, LVBench, and Video-MME (Long), outperforming the next-best baseline (HippoRAG at 57.0%) by 8.4% [3].",
+            "found": true
+          }
+        ],
+        "numbers": [
+          "69.5"
+        ],
+        "missingNumbers": [],
+        "reasons": [],
+        "id": "claim-17",
+        "contributedBy": [
+          "Evidence Auditor"
+        ]
+      },
+      {
+        "claim": {
+          "claim": "On SAW-BENCH Spatial Memory evaluation, Gemini 3 Flash achieves 66.00% accuracy in reasoning about changes in the environment by comparing spatial information across time.",
+          "sources": [
+            {
+              "path": "benchmarks/video_understanding/spatial_reasoning",
+              "quote": "- Spatial Memory (4.83%): reason about changes in the environment by comparing spatial information across time."
+            },
+            {
+              "path": "benchmarks/video_understanding/spatial_reasoning",
+              "quote": "| Gemini 3 Flash | 53.89 | 48.50 | 41.13 | 64.84 | 61.57 | 66.00 | 70.99 |"
+            }
+          ],
+          "result": {
+            "benchmark": "SAW-BENCH",
+            "dataset": "Spatial Memory task",
+            "model": "Gemini 3 Flash",
+            "metric": "accuracy"
+          }
+        },
+        "verified": true,
+        "sources": [
+          {
+            "path": "benchmarks/video_understanding/spatial_reasoning",
+            "quote": "- Spatial Memory (4.83%): reason about changes in the environment by comparing spatial information across time.",
+            "found": true
+          },
+          {
+            "path": "benchmarks/video_understanding/spatial_reasoning",
+            "quote": "| Gemini 3 Flash | 53.89 | 48.50 | 41.13 | 64.84 | 61.57 | 66.00 | 70.99 |",
+            "found": true
+          }
+        ],
+        "numbers": [
+          "3",
+          "66.00"
+        ],
+        "missingNumbers": [],
+        "reasons": [],
+        "id": "claim-18",
+        "contributedBy": [
+          "Evidence Auditor"
+        ]
+      },
+      {
+        "claim": {
+          "claim": "Tracking approaches like AMEGO's EgoSTARK single-object tracker extend object tracklets even when hands leave the field of view, terminating after 20 consecutive frames with a free hand.",
+          "sources": [
+            {
+              "path": "memory_architectures",
+              "quote": "Updating — an EgoSTARK single-object tracker (SOT) extends the track even when hands leave the field of view, terminating after eₒ = 20 consecutive frames with a free hand"
+            }
+          ]
+        },
+        "verified": true,
+        "sources": [
+          {
+            "path": "memory_architectures",
+            "quote": "Updating — an EgoSTARK single-object tracker (SOT) extends the track even when hands leave the field of view, terminating after eₒ = 20 consecutive frames with a free hand",
+            "found": true
+          }
+        ],
+        "numbers": [
+          "20"
+        ],
+        "missingNumbers": [],
+        "reasons": [],
+        "id": "claim-19",
+        "contributedBy": [
+          "Judge"
+        ]
+      },
+      {
+        "claim": {
+          "claim": "For visual re-identification, visual features from DINOv2 are averaged over tracklet frames and matched against stored instances using cosine similarity with a threshold of 0.6.",
+          "sources": [
+            {
+              "path": "memory_architectures",
+              "quote": "Assignment — visual features (DINOv2, γ) are averaged over tracklet frames; cosine similarity to stored instances assigns the tracklet to an existing object ID (threshold θ = 0.6) or creates a new one"
+            }
+          ]
+        },
+        "verified": true,
+        "sources": [
+          {
+            "path": "memory_architectures",
+            "quote": "Assignment — visual features (DINOv2, γ) are averaged over tracklet frames; cosine similarity to stored instances assigns the tracklet to an existing object ID (threshold θ = 0.6) or creates a new one",
+            "found": true
+          }
+        ],
+        "numbers": [
+          "0.6"
+        ],
+        "missingNumbers": [],
+        "reasons": [],
+        "id": "claim-20",
+        "contributedBy": [
+          "Judge"
+        ]
+      },
+      {
+        "claim": {
+          "claim": "In spatial context reasoning, models fail to maintain persistent object memory, incorrectly inferring that objects leaving the camera field of view are absent rather than off-screen.",
+          "sources": [
+            {
+              "path": "benchmarks/video_understanding/spatial_reasoning",
+              "quote": "Finding 3 — Failure to maintain persistent object memory. Models treat non-visibility as non-existence: objects that leave the camera's field of view are incorrectly inferred to be absent rather than merely off-screen."
+            }
+          ]
+        },
+        "verified": true,
+        "sources": [
+          {
+            "path": "benchmarks/video_understanding/spatial_reasoning",
+            "quote": "Finding 3 — Failure to maintain persistent object memory. Models treat non-visibility as non-existence: objects that leave the camera's field of view are incorrectly inferred to be absent rather than merely off-screen.",
+            "found": true
+          }
+        ],
+        "numbers": [],
+        "missingNumbers": [],
+        "reasons": [],
+        "id": "claim-21",
+        "contributedBy": [
+          "Judge"
+        ]
+      },
+      {
+        "claim": {
+          "claim": "VQLoC localizes the most-recent spatio-temporal occurrence of an object query using a shared DINO-pretrained ViT-B14 backbone and spatial cross-attention transformers.",
+          "sources": [
+            {
+              "path": "object_identity_tracking",
+              "quote": "VQLoC uses a shared DINO-pretrained ViT-B14 backbone to extract features for both the query crop and each video frame. A spatial cross-attention transformer establishes query-to-frame correspondences, updating frame features to identify query-relevant regions."
+            }
+          ]
+        },
+        "verified": true,
+        "sources": [
+          {
+            "path": "object_identity_tracking",
+            "quote": "VQLoC uses a shared DINO-pretrained ViT-B14 backbone to extract features for both the query crop and each video frame. A spatial cross-attention transformer establishes query-to-frame correspondences, updating frame features to identify query-relevant regions.",
+            "found": true
+          }
+        ],
+        "numbers": [],
+        "missingNumbers": [],
+        "reasons": [],
+        "id": "claim-22",
+        "contributedBy": [
+          "Judge"
+        ]
+      },
+      {
+        "claim": {
+          "claim": "Episodic memory frameworks like WorldMM organize multi-scale episodic knowledge graphs to represent factual events and entity-action-entity triplets.",
+          "sources": [
+            {
+              "path": "memory_architectures",
+              "quote": "Episodic | Set of Knowledge Graphs Mₑ = {G_t0 … G_tN} | Multiple scales (e.g., 30 s, 3 min, 10 min, 1 h for EgoLifeQA) | Factual events, entity-action-entity triplets"
+            }
+          ]
+        },
+        "verified": true,
+        "sources": [
+          {
+            "path": "memory_architectures",
+            "quote": "Episodic | Set of Knowledge Graphs Mₑ = {G_t0 … G_tN} | Multiple scales (e.g., 30 s, 3 min, 10 min, 1 h for EgoLifeQA) | Factual events, entity-action-entity triplets",
+            "found": true
+          }
+        ],
+        "numbers": [],
+        "missingNumbers": [],
+        "reasons": [],
+        "id": "claim-23",
+        "contributedBy": [
+          "Judge"
+        ]
+      }
+    ],
+    "conflicts": [],
+    "agents": [
+      {
+        "name": "Researcher A",
+        "ok": true,
+        "summary": "To determine object identity after re-entry, systems utilize spatio-temporal tracking, visual re-identification embeddings, and structural frameworks like knowledge graphs and episodic memory. While DINOv2 visual features and spatial trackers handle short-term persistence, long-horizon scenarios benefit from episodic graphs that link recurring entities.",
+        "verified": 5,
+        "total": 5
+      },
+      {
+        "name": "Researcher B",
+        "ok": true,
+        "summary": "Determining whether an observed object is the same physical object seen earlier relies on multiple complementary approaches. Visual embeddings and instance re-identification via backbones like DINOv2 or SWAG allow semantic-free appearance matching. Tracking-based methods leverage single-object trackers to follow objects out of view and maintain tracklets. Spatial context and episodic memory integrate temporal intervals, hand-object interactions, and structured knowledge graphs to resolve object continuity across long-horizon episodes.",
+        "verified": 4,
+        "total": 5
+      },
+      {
+        "name": "Contradiction Hunter",
+        "ok": true,
+        "summary": "To determine whether an observed object is the same physical object seen earlier, systems can utilize spatio-temporal tracking, visual re-identification through feature embeddings, spatial context reasoning, or structured episodic memory. Empirical benchmarks show that pure appearance matching often fails when objects leave the field of view, highlighting the need for persistent state tracking and episodic grounding.",
+        "verified": 3,
+        "total": 4
+      },
+      {
+        "name": "Evidence Auditor",
+        "ok": true,
+        "summary": "Existing video memory frameworks provide various mechanisms for tracking and retrieving objects over time, utilizing spatio-temporal tracking, visual re-identification embeddings, and structural memory representations. While VQLoC demonstrates high visual query localization performance using a shared backbone and attention, multimodal agents like WorldMM and AMEGO incorporate visual feature embeddings or knowledge graphs for object persistence. However, current benchmarks such as SAW-BENCH reveal that vision-language models still struggle with persistent object memory, frequently treating non-visibility as non-existence rather than maintaining a world state.",
+        "verified": 2,
+        "total": 4
+      }
+    ],
+    "sources": [
+      {
+        "id": "source-01",
+        "path": "memory_architectures",
+        "score": 64.15,
+        "passages": [
+          "Updating — an EgoSTARK single-object tracker (SOT) extends the track even when hands leave the field of view, terminating after eₒ = 20 consecutive frames with a free hand",
+          "Assignment — visual features (DINOv2, γ) are averaged over tracklet frames; cosine similarity to stored instances assigns the tracklet to an existing object ID (threshold θ = 0.6) or creates a new one",
+          "Episodic | Set of Knowledge Graphs Mₑ = {G_t0 … G_tN} | Multiple scales (e.g., 30 s, 3 min, 10 min, 1 h for EgoLifeQA) | Factual events, entity-action-entity triplets",
+          "Assignment — visual features (DINOv2, γ) are averaged over tracklet frames; cosine similarity to stored instances assigns the tracklet to an existing object ID (threshold θ = 0.6) or creates a new one [2].",
+          "Episodic | Set of Knowledge Graphs Mₑ = {G_t0 … G_tN} | Multiple scales (e.g., 30 s, 3 min, 10 min, 1 h for EgoLifeQA) | Factual events, entity-action-entity triplets |",
+          "— an EgoSTARK single-object tracker (SOT) extends the track even when hands leave the field of view, terminating after eₒ = 20 consecutive frames with a free hand;",
+          "- Hand-Object Interaction (HOI) tracklets O: each tracklet oᵢ is a tuple (tₛ, tₑ, bₜ, h, id) — start/end frames, per-frame bounding boxes, hand side (left/right), and object instance ID.",
+          "AMEGO achieves 36.3% accuracy on the Active Memories Benchmark (AMB) vs. ≈22% for semantic-QA baselines (+12.7% margin).",
+          "Visual | Feature embeddings Mᶠᵥ + frame-timestamp index Mᴵᵥ | Short fixed segments tᵥ | Scene appearance, object details not representable in text |",
+          "WorldMM-GPT achieves 69.5% average accuracy across EgoLifeQA, Ego-R1 Bench, HippoVlog, LVBench, and Video-MME (Long), outperforming the next-best baseline (HippoRAG at 57.0%) by 8.4% [3]."
+        ],
+        "citedClaims": [
+          "claim-01",
+          "claim-02",
+          "claim-05",
+          "claim-06",
+          "claim-07",
+          "claim-10",
+          "claim-11",
+          "claim-12",
+          "claim-16",
+          "claim-17",
+          "claim-19",
+          "claim-20",
+          "claim-23"
+        ]
+      },
+      {
+        "id": "source-02",
+        "path": "object_identity_tracking",
+        "score": 63.16,
+        "passages": [
+          "VQLoC | 0.31 | 0.22 | 47.05 | 55.89 | 0.32 | 0.24 | 36",
+          "VQLoC (Visual Query Localization from Correspondence) is a single-stage, end-to-end trainable framework for answering \"where did I last see object X?\" in long-form egocentric video [1].",
+          "| VQLoC | 0.31 | 0.22 | 47.05 | 55.89 | 0.32 | 0.24 | 36 |",
+          "VQLoC uses a shared DINO-pretrained ViT-B14 backbone to extract features for both the query crop and each video frame. A spatial cross-attention transformer establishes query-to-frame correspondences, updating frame features to identify query-relevant regions.",
+          "VQLoC uses a shared DINO-pretrained ViT-B14 backbone to extract features for both the query crop and each video frame.",
+          "VQLoC outperforms prior methods by ~20% in accuracy and achieves 36 FPS (10× faster than stage-wise methods at ~3 FPS), and ranked first on the Ego4D VQ2D challenge leaderboard [1]."
+        ],
+        "citedClaims": [
+          "claim-03",
+          "claim-08",
+          "claim-14",
+          "claim-15",
+          "claim-22"
+        ]
+      },
+      {
+        "id": "source-03",
+        "path": "benchmarks/video_understanding/long_horizon_memory",
+        "score": 44.93999999999999,
+        "passages": [],
+        "citedClaims": []
+      },
+      {
+        "id": "source-04",
+        "path": "benchmarks/video_understanding/spatial_reasoning",
+        "score": 43.55,
+        "passages": [
+          "Finding 3 — Failure to maintain persistent object memory. Models treat non-visibility as non-existence: objects that leave the camera's field of view are incorrectly inferred to be absent rather than merely off-screen.",
+          "Finding 3 — Failure to maintain persistent object memory. Models treat non-visibility as non-existence: objects that leave the camera's field of view are incorrectly inferred to be absent rather than merely off-screen. Models rely on view-dependent evidence rather than a persistent world-state representation [2].",
+          "Models treat non-visibility as non-existence: objects that leave the camera's field of view are incorrectly inferred to be absent rather than merely off-screen. Models rely on view-dependent evidence rather than a persistent world-state representation [2].",
+          "- Spatial Memory (4.83%): reason about changes in the environment by comparing spatial information across time.",
+          "| Gemini 3 Flash | 53.89 | 48.50 | 41.13 | 64.84 | 61.57 | 66.00 | 70.99 |"
+        ],
+        "citedClaims": [
+          "claim-04",
+          "claim-09",
+          "claim-13",
+          "claim-18",
+          "claim-21"
+        ]
+      },
+      {
+        "id": "source-05",
+        "path": "memory_representation/knowledge_structure",
+        "score": 37.849999999999994,
+        "passages": [],
+        "citedClaims": []
+      }
+    ]
+  }
+}

@@ -47,7 +47,7 @@
               <div class="composer-footer">
                 <div class="composer-hint">
                   <span class="keycap">⌘</span><span class="keycap">↵</span>
-                  <span>to run council</span>
+                  <span id="live-allowance">1 live investigation this session</span>
                 </div>
                 <button class="primary-button" type="submit">
                   <span>Run council</span>
@@ -85,9 +85,9 @@
           <div class="section-title-row">
             <div>
               <span class="section-number">02</span>
-              <h2>Recent investigations</h2>
+              <h2>Try an investigation</h2>
             </div>
-            <button type="button" class="text-button" data-action="archive">View archive <span>↗</span></button>
+            <span class="section-note">Curated, pre-generated reports · no live usage</span>
           </div>
           <div class="run-list" id="run-list" aria-live="polite">
             <div class="run-skeleton"><span></span><span></span><span></span></div>
@@ -120,6 +120,19 @@
             </div>
             <div class="stages" id="stages"></div>
             <div class="run-note"><span class="pulse"></span><span id="run-note">Searching the knowledge base…</span></div>
+          </div>
+        </section>
+
+        <section class="outside-panel hidden" id="outside-panel" aria-live="polite">
+          <div class="outside-copy">
+            <p class="eyebrow">Retrieval assessment</p>
+            <h1 id="outside-title">Outside current research collection</h1>
+            <p id="outside-message"></p>
+          </div>
+          <div class="outside-details">
+            <span>Closest available research areas</span>
+            <div id="outside-areas"></div>
+            <button type="button" class="text-button" data-action="home">Ask another question <span>↗</span></button>
           </div>
         </section>
 
@@ -278,7 +291,7 @@
     <dialog class="source-dialog" id="source-dialog">
       <div class="glass-refraction" aria-hidden="true"></div>
       <div class="dialog-bar">
-        <div><span>Knowledge-base source</span><strong id="dialog-title"></strong></div>
+        <div><span>Cited source excerpts</span><strong id="dialog-title"></strong></div>
         <button class="icon-button" id="close-dialog" aria-label="Close source">
           <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m5 5 10 10M15 5 5 15" /></svg>
         </button>

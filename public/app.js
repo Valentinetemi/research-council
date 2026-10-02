@@ -8,6 +8,7 @@ const state = {
   glassVisible: false,
   graphNodes: new Map(),
   graphAnimationTimers: [],
+  liveRemaining: 1,
 }
 
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
@@ -25,7 +26,12 @@ const slug = (value = '') => String(value).toLowerCase().replaceAll(' ', '-')
 async function request(path, options) {
   const response = await fetch(path, options)
   const body = await response.json().catch(() => ({}))
-  if (!response.ok) throw new Error(body.error || 'The request could not be completed.')
+  if (!response.ok) {
+    const error = new Error(body.error || 'The request could not be completed.')
+    error.status = response.status
+    error.body = body
+    throw error
+  }
   return body
 }
 
@@ -72,17 +78,28 @@ function showInvestigation() {
   window.scrollTo({ top: 0, behavior: 'instant' })
 }
 
-function renderRuns(runs) {
-  $('#archive-count').textContent = runs.length
-  if (!runs.length) {
-    $('#run-list').innerHTML = '<p class="empty-state">No investigations have been saved yet. Run the council to create the first report.</p>'
+function applyLiveAllowance(liveAllowance = { limit: 1, remaining: 1 }) {
+  state.liveRemaining = liveAllowance.remaining
+  const exhausted = liveAllowance.remaining < 1
+  const button = $('.primary-button')
+  button.disabled = exhausted
+  $('span', button).textContent = exhausted ? 'Live limit reached' : 'Run council'
+  $('#live-allowance').textContent = exhausted
+    ? 'live investigation used · curated reports remain available'
+    : `${liveAllowance.remaining} live investigation this session`
+}
+
+function renderDemos(demos) {
+  $('#archive-count').textContent = demos.length
+  if (!demos.length) {
+    $('#run-list').innerHTML = '<p class="empty-state">Curated investigations are temporarily unavailable.</p>'
     return
   }
-  $('#run-list').innerHTML = runs.map((run) => `
-    <button class="run-row" type="button" data-run-file="${escapeHtml(run.file)}">
-      <span class="run-date">${escapeHtml(formatDate(run.createdAt, 'short'))}</span>
-      <span class="run-question">${escapeHtml(run.question)}</span>
-      <span class="run-verdict ${slug(run.verdict)}">${escapeHtml(verdictLabel(run.verdict))}</span>
+  $('#run-list').innerHTML = demos.map((demo) => `
+    <button class="run-row" type="button" data-demo-slug="${escapeHtml(demo.slug)}">
+      <span class="run-date">CURATED</span>
+      <span class="run-question">${escapeHtml(demo.question)}</span>
+      <span class="run-verdict ${slug(demo.verdict)}">${escapeHtml(verdictLabel(demo.verdict))}</span>
       <span class="run-arrow" aria-hidden="true">↗</span>
     </button>
   `).join('')
@@ -96,7 +113,8 @@ async function loadOverview() {
     $('#research-areas').innerHTML = overview.knowledgeBase.areas.length
       ? overview.knowledgeBase.areas.map((area) => `<span>${escapeHtml(area)}</span>`).join('')
       : '<span>No sources yet</span>'
-    renderRuns(overview.runs)
+    applyLiveAllowance(overview.liveAllowance)
+    renderDemos(overview.demos)
   } catch (error) {
     $('#run-list').innerHTML = `<p class="empty-state">${escapeHtml(error.message)}</p>`
     toast(error.message)
@@ -204,6 +222,7 @@ function clearGraphAnimation() {
 function beginRunning(question, stages) {
   if ($('#investigation-view').classList.contains('hidden')) showInvestigation()
   $('#report').classList.add('hidden')
+  $('#outside-panel').classList.add('hidden')
   $('#running-panel').classList.remove('hidden')
   $('#running-question').textContent = question
   $('#report-id').textContent = 'INVESTIGATION / LIVE'
@@ -211,11 +230,16 @@ function beginRunning(question, stages) {
 }
 
 async function runCouncil(question) {
+  if (state.liveRemaining < 1) return toast('This session has already used its live investigation. Try a curated report below.')
   const origin = $('.primary-button').getBoundingClientRect()
   beginRunning(question, [
-    { label: 'Retrieving evidence', state: 'running' },
-    ...['Researcher A', 'Researcher B', 'Contradiction Hunter', 'Evidence Auditor', 'Verifying claims', 'Judge reviewing evidence']
-      .map((label) => ({ label, state: 'pending' })),
+    { id: 'retrieval', label: 'Retrieving evidence', state: 'running' },
+    { id: 'researcher-a', label: 'Researcher A', state: 'pending' },
+    { id: 'researcher-b', label: 'Researcher B', state: 'pending' },
+    { id: 'contradiction-hunter', label: 'Contradiction Hunter', state: 'pending' },
+    { id: 'evidence-auditor', label: 'Evidence Auditor', state: 'pending' },
+    { id: 'verification', label: 'Verifying claims', state: 'pending' },
+    { id: 'judge', label: 'Judge reviewing evidence', state: 'pending' },
   ])
   activateCouncilGlass(origin)
   try {
@@ -224,9 +248,11 @@ async function runCouncil(question) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ question }),
     })
+    applyLiveAllowance(job.liveAllowance)
     history.replaceState({}, '', `?job=${encodeURIComponent(job.id)}`)
     pollJob(job.id)
   } catch (error) {
+    if (error.body?.liveAllowance) applyLiveAllowance(error.body.liveAllowance)
     $('#run-note').textContent = error.message
     $('#glass-stage').textContent = 'Unable to start council'
     window.setTimeout(concealCouncilGlass, reducedMotion.matches ? 0 : 900)
@@ -246,9 +272,16 @@ async function pollJob(id) {
       await loadOverview()
       return
     }
+    if (job.state === 'outside_collection') {
+      concealCouncilGlass()
+      renderOutsideCollection(job)
+      await loadOverview()
+      return
+    }
     if (job.state === 'failed') {
       $('#run-note').textContent = job.error || 'The investigation could not be completed.'
       $('#glass-stage').textContent = 'Investigation stopped'
+      window.setTimeout(concealCouncilGlass, reducedMotion.matches ? 0 : 900)
       toast('Investigation stopped — review the status for details.')
       return
     }
@@ -318,7 +351,7 @@ function renderSources(sources) {
       <span>${String(index + 1).padStart(2, '0')}</span>
       <strong class="source-path">${escapeHtml(source.path)}</strong>
       <span class="source-score">score ${Number(source.score).toFixed(1)}</span>
-      <button type="button" data-source-path="${escapeHtml(source.path)}">Read source ↗</button>
+      <button type="button" data-source-path="${escapeHtml(source.path)}">Inspect excerpts ↗</button>
     </div>
   `).join('')
 }
@@ -617,6 +650,7 @@ function renderReport(report) {
   concealCouncilGlass()
   showInvestigation()
   $('#running-panel').classList.add('hidden')
+  $('#outside-panel').classList.add('hidden')
   $('#report').classList.remove('hidden')
 
   const runCode = new Date(report.createdAt).toISOString().slice(0, 10).replaceAll('-', '')
@@ -642,15 +676,31 @@ function renderReport(report) {
   $('#agent-list').innerHTML = renderAgents(report.agents)
 }
 
-async function loadRun(file) {
+function renderOutsideCollection(job) {
+  state.report = null
   showInvestigation()
+  $('#running-panel').classList.add('hidden')
+  $('#report').classList.add('hidden')
+  $('#outside-panel').classList.remove('hidden')
+  $('#report-id').textContent = 'INVESTIGATION / RETRIEVAL ONLY'
+  $('#outside-title').textContent = job.outsideCollection?.title || 'Outside current research collection'
+  $('#outside-message').textContent = job.outsideCollection?.message || 'The available research collection does not contain enough relevant evidence to investigate this question reliably.'
+  const areas = job.outsideCollection?.areas || []
+  $('#outside-areas').innerHTML = areas.length
+    ? areas.map((area) => `<span>${escapeHtml(area)}</span>`).join('')
+    : '<span>No sufficiently related area found</span>'
+}
+
+async function loadDemo(slug) {
+  showInvestigation()
+  $('#outside-panel').classList.add('hidden')
   $('#report').classList.add('hidden')
   $('#running-panel').classList.remove('hidden')
-  $('#running-question').textContent = 'Opening saved investigation…'
+  $('#running-question').textContent = 'Opening curated investigation…'
   try {
-    const report = await request(`/api/runs/${encodeURIComponent(file)}`)
-    history.replaceState({}, '', `?run=${encodeURIComponent(file)}`)
-    renderReport(report)
+    const demo = await request(`/api/demos/${encodeURIComponent(slug)}`)
+    history.replaceState({}, '', `?demo=${encodeURIComponent(slug)}`)
+    renderReport(demo.report)
   } catch (error) {
     showHome()
     toast(error.message)
@@ -662,7 +712,9 @@ function openSource(path) {
   if (!source) return toast('Source is not available in this report.')
   if ($('#evidence-dialog').open) $('#evidence-dialog').close()
   $('#dialog-title').textContent = source.path
-  $('#dialog-content').textContent = source.text
+  $('#dialog-content').textContent = source.passages.length
+    ? `Evidence excerpts cited in this investigation\n\n${source.passages.map((passage, index) => `[${index + 1}] ${passage}`).join('\n\n')}`
+    : 'This source was retrieved for context, but no verified claim cites an exact passage from it.'
   $('#source-dialog').showModal()
 }
 
@@ -703,8 +755,8 @@ document.addEventListener('click', (event) => {
     $('#question').focus()
   }
 
-  const run = event.target.closest('[data-run-file]')
-  if (run) loadRun(run.dataset.runFile)
+  const demo = event.target.closest('[data-demo-slug]')
+  if (demo) loadDemo(demo.dataset.demoSlug)
 
   const evidence = event.target.closest('[data-evidence-claim]')
   if (evidence) openEvidence(evidence.dataset.evidenceClaim)
@@ -778,9 +830,9 @@ $$('.report-nav a').forEach((link) => link.addEventListener('click', () => {
 async function boot() {
   await loadOverview()
   const params = new URLSearchParams(location.search)
-  const file = params.get('run')
+  const demo = params.get('demo')
   const job = params.get('job')
-  if (file) return loadRun(file)
+  if (demo) return loadDemo(demo)
   if (job) return pollJob(job)
 }
 

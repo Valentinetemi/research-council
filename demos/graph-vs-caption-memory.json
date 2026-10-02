@@ -1,0 +1,654 @@
+{
+  "schemaVersion": 1,
+  "slug": "graph-vs-caption-memory",
+  "title": "Graph memory compared with caption memory",
+  "description": "What the current literature can—and cannot—establish about long-term video understanding.",
+  "report": {
+    "createdAt": "2026-10-02T13:31:30.221Z",
+    "question": "Does structured graph memory outperform simple caption memory for long-term video memory? Cite the exact sources and the benchmark, model and subset behind every number.",
+    "model": "gemini-3.5-flash-lite",
+    "verdict": "insufficient evidence",
+    "verdictLabel": "Insufficient evidence",
+    "reasoning": "The provided evidence does not contain a direct head-to-head comparison between structured graph memory and simple caption memory for long-term video memory. Consequently, it is not possible to determine whether structured graph memory outperforms simple caption memory based solely on the available text.",
+    "openQuestions": [
+      "How does structured graph memory compare directly against simple caption memory for long-term video memory tasks?"
+    ],
+    "counts": {
+      "sources": 5,
+      "claims": 11,
+      "verified": 11,
+      "rejected": 0,
+      "judgeVerified": 0
+    },
+    "claims": [
+      {
+        "claim": {
+          "claim": "On the ZH-4O benchmark, TELEMEM achieves 86.33% accuracy, outperforming Mem0 at 70.20%.",
+          "sources": [
+            {
+              "path": "memory_representation/knowledge_structure",
+              "quote": "Mem0 | 70.20 |\n| MOOM | 72.60 |\n| A-Mem | 73.78 |\n| Memobase | 76.78 |\n| Long context LLM | 84.92 |\n| TELEMEM | 86.33 |"
+            }
+          ],
+          "result": {
+            "benchmark": "ZH-4O",
+            "dataset": "ZH-4O",
+            "model": "TELEMEM",
+            "metric": "Accuracy (%)"
+          }
+        },
+        "verified": true,
+        "sources": [
+          {
+            "path": "memory_representation/knowledge_structure",
+            "quote": "Mem0 | 70.20 |\n| MOOM | 72.60 |\n| A-Mem | 73.78 |\n| Memobase | 76.78 |\n| Long context LLM | 84.92 |\n| TELEMEM | 86.33 |",
+            "found": true
+          }
+        ],
+        "numbers": [
+          "86.33",
+          "70.20"
+        ],
+        "missingNumbers": [],
+        "reasons": [],
+        "id": "claim-01",
+        "contributedBy": [
+          "Researcher A"
+        ]
+      },
+      {
+        "claim": {
+          "claim": "On the LoCoMo benchmark, Mem0 achieves an overall accuracy of 52.01% compared to RAG at 39.03%.",
+          "sources": [
+            {
+              "path": "scaling_and_model_analysis",
+              "quote": "RAG | 20.91 | 32.39 | 35.41 | 48.03 | 39.03 |\n| Mem0 | 54.96 | 31.15 | 40.62 | 60.28 | 52.01 |"
+            }
+          ],
+          "result": {
+            "benchmark": "LoCoMo",
+            "dataset": "LoCoMo",
+            "model": "Mem0",
+            "metric": "Overall Accuracy"
+          }
+        },
+        "verified": true,
+        "sources": [
+          {
+            "path": "scaling_and_model_analysis",
+            "quote": "RAG | 20.91 | 32.39 | 35.41 | 48.03 | 39.03 |\n| Mem0 | 54.96 | 31.15 | 40.62 | 60.28 | 52.01 |",
+            "found": true
+          }
+        ],
+        "numbers": [
+          "52.01",
+          "39.03"
+        ],
+        "missingNumbers": [],
+        "reasons": [],
+        "id": "claim-02",
+        "contributedBy": [
+          "Researcher A"
+        ]
+      },
+      {
+        "claim": {
+          "claim": "WorldMM-GPT achieves 69.5% average accuracy across EgoLifeQA, Ego-R1 Bench, HippoVlog, LVBench, and Video-MME (Long), outperforming HippoRAG at 57.0%.",
+          "sources": [
+            {
+              "path": "memory_architectures",
+              "quote": "WorldMM-GPT achieves 69.5% average accuracy across EgoLifeQA, Ego-R1 Bench, HippoVlog, LVBench, and Video-MME (Long), outperforming the next-best baseline (HippoRAG at 57.0%) by 8.4% [3]."
+            }
+          ],
+          "result": {
+            "benchmark": "WorldMM evaluation",
+            "dataset": "EgoLifeQA, Ego-R1 Bench, HippoVlog, LVBench, and Video-MME (Long)",
+            "model": "WorldMM-GPT",
+            "metric": "Average accuracy (%)"
+          }
+        },
+        "verified": true,
+        "sources": [
+          {
+            "path": "memory_architectures",
+            "quote": "WorldMM-GPT achieves 69.5% average accuracy across EgoLifeQA, Ego-R1 Bench, HippoVlog, LVBench, and Video-MME (Long), outperforming the next-best baseline (HippoRAG at 57.0%) by 8.4% [3].",
+            "found": true
+          }
+        ],
+        "numbers": [
+          "69.5",
+          "57.0"
+        ],
+        "missingNumbers": [],
+        "reasons": [],
+        "id": "claim-03",
+        "contributedBy": [
+          "Researcher B"
+        ]
+      },
+      {
+        "claim": {
+          "claim": "On the ZH-4O benchmark, TELEMEM achieves 86.33% accuracy, outperforming Mem0 at 70.20%, RAG at 62.45%, and a Long context LLM at 84.92%.",
+          "sources": [
+            {
+              "path": "memory_representation/knowledge_structure",
+              "quote": "On the ZH-4O benchmark (28 human-LLM sessions, avg. 600 turns, 1,068 multiple-choice questions):\n\n| Method | Accuracy (%) |\n|---|---|\n| RAG | 62.45 |\n| Mem0 | 70.20 |\n| MOOM | 72.60 |\n| A-Mem | 73.78 |\n| Memobase | 76.78 |\n| Long context LLM | 84.92 |\n| **TELEMEM** | **86.33** |"
+            }
+          ],
+          "result": {
+            "benchmark": "ZH-4O",
+            "dataset": "28 human-LLM sessions, avg. 600 turns, 1,068 multiple-choice questions",
+            "model": "TELEMEM",
+            "metric": "Accuracy (%)"
+          }
+        },
+        "verified": true,
+        "sources": [
+          {
+            "path": "memory_representation/knowledge_structure",
+            "quote": "On the ZH-4O benchmark (28 human-LLM sessions, avg. 600 turns, 1,068 multiple-choice questions):\n\n| Method | Accuracy (%) |\n|---|---|\n| RAG | 62.45 |\n| Mem0 | 70.20 |\n| MOOM | 72.60 |\n| A-Mem | 73.78 |\n| Memobase | 76.78 |\n| Long context LLM | 84.92 |\n| **TELEMEM** | **86.33** |",
+            "found": true
+          }
+        ],
+        "numbers": [
+          "86.33",
+          "70.20",
+          "62.45",
+          "84.92"
+        ],
+        "missingNumbers": [],
+        "reasons": [],
+        "id": "claim-04",
+        "contributedBy": [
+          "Researcher B"
+        ]
+      },
+      {
+        "claim": {
+          "claim": "On the LoCoMo benchmark, a Long Context LLM achieves 70.71% overall accuracy compared to 61.49% for TELEMEM and 52.01% for Mem0.",
+          "sources": [
+            {
+              "path": "scaling_and_model_analysis",
+              "quote": "Table 3 compares multiple memory systems on the LoCoMo benchmark (1,540 QA pairs, LLM-as-a-Judge evaluation) across four reasoning categories [1]:\n\n| Method | Single-Hop | Multi-Hop | Open Domain | Temporal | Overall |\n|---|---|---|---|---|---|\n| RAG | 20.91 | 32.39 | 35.41 | 48.03 | 39.03 |\n| Mem0 | 54.96 | 31.15 | 40.62 | 60.28 | 52.01 |\n| A-Mem | 44.32 | 35.82 | 33.33 | 56.59 | 48.57 |\n| Memobase | 50.70 | 66.04 | 37.50 | 58.97 | 57.59 |\n| Long Context LLM | 64.89 | 47.66 | 42.70 | 84.66 | 70.71 |\n| TELEMEM | 64.53 | 20.56 | 40.62 | 78.47 | 61.49 |"
+            }
+          ],
+          "result": {
+            "benchmark": "LoCoMo",
+            "dataset": "1,540 QA pairs, LLM-as-a-Judge evaluation",
+            "model": "Long Context LLM",
+            "metric": "Overall accuracy (%)"
+          }
+        },
+        "verified": true,
+        "sources": [
+          {
+            "path": "scaling_and_model_analysis",
+            "quote": "Table 3 compares multiple memory systems on the LoCoMo benchmark (1,540 QA pairs, LLM-as-a-Judge evaluation) across four reasoning categories [1]:\n\n| Method | Single-Hop | Multi-Hop | Open Domain | Temporal | Overall |\n|---|---|---|---|---|---|\n| RAG | 20.91 | 32.39 | 35.41 | 48.03 | 39.03 |\n| Mem0 | 54.96 | 31.15 | 40.62 | 60.28 | 52.01 |\n| A-Mem | 44.32 | 35.82 | 33.33 | 56.59 | 48.57 |\n| Memobase | 50.70 | 66.04 | 37.50 | 58.97 | 57.59 |\n| Long Context LLM | 64.89 | 47.66 | 42.70 | 84.66 | 70.71 |\n| TELEMEM | 64.53 | 20.56 | 40.62 | 78.47 | 61.49 |",
+            "found": true
+          }
+        ],
+        "numbers": [
+          "70.71",
+          "61.49",
+          "52.01"
+        ],
+        "missingNumbers": [],
+        "reasons": [],
+        "id": "claim-05",
+        "contributedBy": [
+          "Researcher B"
+        ]
+      },
+      {
+        "claim": {
+          "claim": "TELEMEM achieves 86.33% accuracy on the ZH-4O benchmark.",
+          "sources": [
+            {
+              "path": "memory_representation/knowledge_structure",
+              "quote": "TELEMEM | 86.33"
+            }
+          ],
+          "result": {
+            "benchmark": "ZH-4O",
+            "dataset": "ZH-4O benchmark",
+            "model": "TELEMEM",
+            "metric": "Accuracy"
+          }
+        },
+        "verified": true,
+        "sources": [
+          {
+            "path": "memory_representation/knowledge_structure",
+            "quote": "TELEMEM | 86.33",
+            "found": true
+          }
+        ],
+        "numbers": [
+          "86.33"
+        ],
+        "missingNumbers": [],
+        "reasons": [],
+        "id": "claim-06",
+        "contributedBy": [
+          "Contradiction Hunter"
+        ]
+      },
+      {
+        "claim": {
+          "claim": "Mem0 achieves 70.20% accuracy on the ZH-4O benchmark.",
+          "sources": [
+            {
+              "path": "memory_representation/knowledge_structure",
+              "quote": "Mem0 | 70.20"
+            }
+          ],
+          "result": {
+            "benchmark": "ZH-4O",
+            "dataset": "ZH-4O benchmark",
+            "model": "Mem0",
+            "metric": "Accuracy"
+          }
+        },
+        "verified": true,
+        "sources": [
+          {
+            "path": "memory_representation/knowledge_structure",
+            "quote": "Mem0 | 70.20",
+            "found": true
+          }
+        ],
+        "numbers": [
+          "70.20"
+        ],
+        "missingNumbers": [],
+        "reasons": [],
+        "id": "claim-07",
+        "contributedBy": [
+          "Contradiction Hunter"
+        ]
+      },
+      {
+        "claim": {
+          "claim": "AMEGO achieves 36.3% accuracy on the Active Memories Benchmark (AMB).",
+          "sources": [
+            {
+              "path": "memory_architectures",
+              "quote": "AMEGO achieves 36.3% accuracy on the Active Memories Benchmark (AMB) vs. ≈22% for semantic-QA baselines (+12.7% margin)."
+            }
+          ],
+          "result": {
+            "benchmark": "Active Memories Benchmark",
+            "dataset": "AMB",
+            "model": "AMEGO",
+            "metric": "Accuracy"
+          }
+        },
+        "verified": true,
+        "sources": [
+          {
+            "path": "memory_architectures",
+            "quote": "AMEGO achieves 36.3% accuracy on the Active Memories Benchmark (AMB) vs. ≈22% for semantic-QA baselines (+12.7% margin).",
+            "found": true
+          }
+        ],
+        "numbers": [
+          "36.3"
+        ],
+        "missingNumbers": [],
+        "reasons": [],
+        "id": "claim-08",
+        "contributedBy": [
+          "Contradiction Hunter"
+        ]
+      },
+      {
+        "claim": {
+          "claim": "WorldMM-GPT achieves 69.5% average accuracy across EgoLifeQA, Ego-R1 Bench, HippoVlog, LVBench, and Video-MME (Long).",
+          "sources": [
+            {
+              "path": "memory_architectures",
+              "quote": "WorldMM-GPT achieves 69.5% average accuracy across EgoLifeQA, Ego-R1 Bench, HippoVlog, LVBench, and Video-MME (Long), outperforming the next-best baseline (HippoRAG at 57.0%) by 8.4% [3]."
+            }
+          ],
+          "result": {
+            "benchmark": "WorldMM benchmark suite",
+            "dataset": "EgoLifeQA, Ego-R1 Bench, HippoVlog, LVBench, and Video-MME (Long)",
+            "model": "WorldMM-GPT",
+            "metric": "Average accuracy"
+          }
+        },
+        "verified": true,
+        "sources": [
+          {
+            "path": "memory_architectures",
+            "quote": "WorldMM-GPT achieves 69.5% average accuracy across EgoLifeQA, Ego-R1 Bench, HippoVlog, LVBench, and Video-MME (Long), outperforming the next-best baseline (HippoRAG at 57.0%) by 8.4% [3].",
+            "found": true
+          }
+        ],
+        "numbers": [
+          "69.5"
+        ],
+        "missingNumbers": [],
+        "reasons": [],
+        "id": "claim-09",
+        "contributedBy": [
+          "Contradiction Hunter"
+        ]
+      },
+      {
+        "claim": {
+          "claim": "On the LoCoMo benchmark, Long Context LLM achieves an overall accuracy of 70.71%.",
+          "sources": [
+            {
+              "path": "scaling_and_model_analysis",
+              "quote": "Long Context LLM | 64.89 | 47.66 | 42.70 | 84.66 | 70.71"
+            }
+          ],
+          "result": {
+            "benchmark": "LoCoMo",
+            "dataset": "LoCoMo benchmark",
+            "model": "Long Context LLM",
+            "metric": "Overall accuracy"
+          }
+        },
+        "verified": true,
+        "sources": [
+          {
+            "path": "scaling_and_model_analysis",
+            "quote": "Long Context LLM | 64.89 | 47.66 | 42.70 | 84.66 | 70.71",
+            "found": true
+          }
+        ],
+        "numbers": [
+          "70.71"
+        ],
+        "missingNumbers": [],
+        "reasons": [],
+        "id": "claim-10",
+        "contributedBy": [
+          "Contradiction Hunter"
+        ]
+      },
+      {
+        "claim": {
+          "claim": "On the LoCoMo benchmark, TELEMEM achieves an overall accuracy of 61.49%.",
+          "sources": [
+            {
+              "path": "scaling_and_model_analysis",
+              "quote": "TELEMEM | 64.53 | 20.56 | 40.62 | 78.47 | 61.49"
+            }
+          ],
+          "result": {
+            "benchmark": "LoCoMo",
+            "dataset": "LoCoMo benchmark",
+            "model": "TELEMEM",
+            "metric": "Overall accuracy"
+          }
+        },
+        "verified": true,
+        "sources": [
+          {
+            "path": "scaling_and_model_analysis",
+            "quote": "TELEMEM | 64.53 | 20.56 | 40.62 | 78.47 | 61.49",
+            "found": true
+          }
+        ],
+        "numbers": [
+          "61.49"
+        ],
+        "missingNumbers": [],
+        "reasons": [],
+        "id": "claim-11",
+        "contributedBy": [
+          "Contradiction Hunter"
+        ]
+      }
+    ],
+    "conflicts": [
+      {
+        "id": "comparison-01",
+        "benchmark": "ZH-4O",
+        "claims": [
+          {
+            "claim": {
+              "claim": "TELEMEM achieves 86.33% accuracy on the ZH-4O benchmark.",
+              "sources": [
+                {
+                  "path": "memory_representation/knowledge_structure",
+                  "quote": "TELEMEM | 86.33"
+                }
+              ],
+              "result": {
+                "benchmark": "ZH-4O",
+                "dataset": "ZH-4O benchmark",
+                "model": "TELEMEM",
+                "metric": "Accuracy"
+              }
+            },
+            "verified": true,
+            "sources": [
+              {
+                "path": "memory_representation/knowledge_structure",
+                "quote": "TELEMEM | 86.33",
+                "found": true
+              }
+            ],
+            "numbers": [
+              "86.33"
+            ],
+            "missingNumbers": [],
+            "reasons": [],
+            "id": "claim-06",
+            "contributedBy": [
+              "Contradiction Hunter"
+            ]
+          },
+          {
+            "claim": {
+              "claim": "Mem0 achieves 70.20% accuracy on the ZH-4O benchmark.",
+              "sources": [
+                {
+                  "path": "memory_representation/knowledge_structure",
+                  "quote": "Mem0 | 70.20"
+                }
+              ],
+              "result": {
+                "benchmark": "ZH-4O",
+                "dataset": "ZH-4O benchmark",
+                "model": "Mem0",
+                "metric": "Accuracy"
+              }
+            },
+            "verified": true,
+            "sources": [
+              {
+                "path": "memory_representation/knowledge_structure",
+                "quote": "Mem0 | 70.20",
+                "found": true
+              }
+            ],
+            "numbers": [
+              "70.20"
+            ],
+            "missingNumbers": [],
+            "reasons": [],
+            "id": "claim-07",
+            "contributedBy": [
+              "Contradiction Hunter"
+            ]
+          }
+        ],
+        "explanation": "These results share a benchmark but evaluate different systems (TELEMEM and Mem0). They are useful comparative evidence, but do not isolate memory representation under an otherwise identical setup."
+      },
+      {
+        "id": "comparison-02",
+        "benchmark": "LoCoMo",
+        "claims": [
+          {
+            "claim": {
+              "claim": "On the LoCoMo benchmark, Long Context LLM achieves an overall accuracy of 70.71%.",
+              "sources": [
+                {
+                  "path": "scaling_and_model_analysis",
+                  "quote": "Long Context LLM | 64.89 | 47.66 | 42.70 | 84.66 | 70.71"
+                }
+              ],
+              "result": {
+                "benchmark": "LoCoMo",
+                "dataset": "LoCoMo benchmark",
+                "model": "Long Context LLM",
+                "metric": "Overall accuracy"
+              }
+            },
+            "verified": true,
+            "sources": [
+              {
+                "path": "scaling_and_model_analysis",
+                "quote": "Long Context LLM | 64.89 | 47.66 | 42.70 | 84.66 | 70.71",
+                "found": true
+              }
+            ],
+            "numbers": [
+              "70.71"
+            ],
+            "missingNumbers": [],
+            "reasons": [],
+            "id": "claim-10",
+            "contributedBy": [
+              "Contradiction Hunter"
+            ]
+          },
+          {
+            "claim": {
+              "claim": "On the LoCoMo benchmark, TELEMEM achieves an overall accuracy of 61.49%.",
+              "sources": [
+                {
+                  "path": "scaling_and_model_analysis",
+                  "quote": "TELEMEM | 64.53 | 20.56 | 40.62 | 78.47 | 61.49"
+                }
+              ],
+              "result": {
+                "benchmark": "LoCoMo",
+                "dataset": "LoCoMo benchmark",
+                "model": "TELEMEM",
+                "metric": "Overall accuracy"
+              }
+            },
+            "verified": true,
+            "sources": [
+              {
+                "path": "scaling_and_model_analysis",
+                "quote": "TELEMEM | 64.53 | 20.56 | 40.62 | 78.47 | 61.49",
+                "found": true
+              }
+            ],
+            "numbers": [
+              "61.49"
+            ],
+            "missingNumbers": [],
+            "reasons": [],
+            "id": "claim-11",
+            "contributedBy": [
+              "Contradiction Hunter"
+            ]
+          }
+        ],
+        "explanation": "These results share a benchmark but evaluate different systems (Long Context LLM and TELEMEM). They are useful comparative evidence, but do not isolate memory representation under an otherwise identical setup."
+      }
+    ],
+    "agents": [
+      {
+        "name": "Researcher A",
+        "ok": true,
+        "summary": "Direct comparisons between structured graph memory and caption-based memory for video and dialogue tasks show that structured representations generally improve reasoning and retrieval performance. On the ZH-4O benchmark, TELEMEM (using structured semantic trajectories) outperforms Mem0. Additionally, multimodal memory approaches that incorporate structured visual or textual features tend to surpass unstructured text-only caption baselines.",
+        "verified": 2,
+        "total": 2
+      },
+      {
+        "name": "Researcher B",
+        "ok": true,
+        "summary": "Structured graph memory systems such as WorldMM achieve high performance on video QA and long-term memory benchmarks, though comparative evaluations like TELEMEM demonstrate that effectiveness depends heavily on structured representations and read-write model capacities. While explicit multimodal memory architectures improve extraction and reasoning over long horizons, simpler baselines and specific benchmarks show varying performance trade-offs.",
+        "verified": 3,
+        "total": 3
+      },
+      {
+        "name": "Contradiction Hunter",
+        "ok": true,
+        "summary": "The provided evidence discusses various long-term video and conversational memory architectures such as WorldMM, TELEMEM, AMEGO, and M3-Agent, alongside benchmarks like ZH-4O, LoCoMo, and the Active Memories Benchmark. While structured knowledge representations and adaptive retrieval frameworks generally improve long-horizon reasoning and token efficiency, the evidence does not provide a direct head-to-head comparison between structured graph memory and simple caption memory for long-term video memory.",
+        "verified": 6,
+        "total": 6
+      },
+      {
+        "name": "Evidence Auditor",
+        "ok": true,
+        "summary": "The provided evidence does not contain a direct head-to-head comparison between structured graph memory and simple caption memory for long-term video memory. Consequently, it is not possible to determine whether structured graph memory outperforms simple caption memory based solely on the available text.",
+        "verified": 0,
+        "total": 0
+      }
+    ],
+    "sources": [
+      {
+        "id": "source-01",
+        "path": "memory_architectures",
+        "score": 38.23,
+        "passages": [
+          "WorldMM-GPT achieves 69.5% average accuracy across EgoLifeQA, Ego-R1 Bench, HippoVlog, LVBench, and Video-MME (Long), outperforming the next-best baseline (HippoRAG at 57.0%) by 8.4% [3].",
+          "AMEGO achieves 36.3% accuracy on the Active Memories Benchmark (AMB) vs. ≈22% for semantic-QA baselines (+12.7% margin)."
+        ],
+        "citedClaims": [
+          "claim-03",
+          "claim-08",
+          "claim-09"
+        ]
+      },
+      {
+        "id": "source-02",
+        "path": "benchmarks/conversational_memory",
+        "score": 32.84,
+        "passages": [],
+        "citedClaims": []
+      },
+      {
+        "id": "source-03",
+        "path": "memory_representation/knowledge_structure",
+        "score": 30.24,
+        "passages": [
+          "Mem0 | 70.20 |\n| MOOM | 72.60 |\n| A-Mem | 73.78 |\n| Memobase | 76.78 |\n| Long context LLM | 84.92 |\n| TELEMEM | 86.33 |",
+          "On the ZH-4O benchmark (28 human-LLM sessions, avg. 600 turns, 1,068 multiple-choice questions):\n\n| Method | Accuracy (%) |\n|---|---|\n| RAG | 62.45 |\n| Mem0 | 70.20 |\n| MOOM | 72.60 |\n| A-Mem | 73.78 |\n| Memobase | 76.78 |\n| Long context LLM | 84.92 |\n| **TELEMEM** | **86.33** |",
+          "TELEMEM | 86.33",
+          "Mem0 | 70.20"
+        ],
+        "citedClaims": [
+          "claim-01",
+          "claim-04",
+          "claim-06",
+          "claim-07"
+        ]
+      },
+      {
+        "id": "source-04",
+        "path": "benchmarks/video_understanding/long_horizon_memory",
+        "score": 25.78,
+        "passages": [],
+        "citedClaims": []
+      },
+      {
+        "id": "source-05",
+        "path": "scaling_and_model_analysis",
+        "score": 22.36,
+        "passages": [
+          "RAG | 20.91 | 32.39 | 35.41 | 48.03 | 39.03 |\n| Mem0 | 54.96 | 31.15 | 40.62 | 60.28 | 52.01 |",
+          "Table 3 compares multiple memory systems on the LoCoMo benchmark (1,540 QA pairs, LLM-as-a-Judge evaluation) across four reasoning categories [1]:\n\n| Method | Single-Hop | Multi-Hop | Open Domain | Temporal | Overall |\n|---|---|---|---|---|---|\n| RAG | 20.91 | 32.39 | 35.41 | 48.03 | 39.03 |\n| Mem0 | 54.96 | 31.15 | 40.62 | 60.28 | 52.01 |\n| A-Mem | 44.32 | 35.82 | 33.33 | 56.59 | 48.57 |\n| Memobase | 50.70 | 66.04 | 37.50 | 58.97 | 57.59 |\n| Long Context LLM | 64.89 | 47.66 | 42.70 | 84.66 | 70.71 |\n| TELEMEM | 64.53 | 20.56 | 40.62 | 78.47 | 61.49 |",
+          "Long Context LLM | 64.89 | 47.66 | 42.70 | 84.66 | 70.71",
+          "TELEMEM | 64.53 | 20.56 | 40.62 | 78.47 | 61.49"
+        ],
+        "citedClaims": [
+          "claim-02",
+          "claim-05",
+          "claim-10",
+          "claim-11"
+        ]
+      }
+    ]
+  }
+}

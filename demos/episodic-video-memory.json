@@ -1,0 +1,865 @@
+{
+  "schemaVersion": 1,
+  "slug": "episodic-video-memory",
+  "title": "Turning long videos into retrievable episodic memory",
+  "description": "Published approaches for structuring and retrieving events from long-form video.",
+  "report": {
+    "createdAt": "2026-10-02T15:13:28.288Z",
+    "question": "can I turn long videos into episodic memories and how easy will it be to retrieve this memories when needed?",
+    "model": "gemini-3.5-flash-lite",
+    "verdict": "yes",
+    "verdictLabel": "Supported",
+    "reasoning": "Long videos can be successfully structured into episodic and semantic memories using frameworks such as TELEMEM and WorldMM. Systems like TELEMEM organize long-term memory into directed acyclic graphs and achieve high retrieval accuracy, scoring 86.33% on the ZH-4O benchmark.",
+    "openQuestions": [
+      "How well do these memory architectures generalize to extremely long videos beyond standard benchmarks without degrading retrieval precision?",
+      "What are the exact computational costs associated with continuous online video segmentation and knowledge graph consolidation?"
+    ],
+    "counts": {
+      "sources": 5,
+      "claims": 23,
+      "verified": 20,
+      "rejected": 3,
+      "judgeVerified": 5
+    },
+    "claims": [
+      {
+        "claim": {
+          "claim": "TELEMEM organizes long-term memory as structured, evolvable semantic trajectories using a directed acyclic graph (DAG) G = (V, E).",
+          "sources": [
+            {
+              "path": "memory_representation/knowledge_structure",
+              "quote": "TELEMEM organizes long-term memory as structured, evolvable semantic trajectories using a directed acyclic graph (DAG) G = (V, E)."
+            }
+          ]
+        },
+        "verified": true,
+        "sources": [
+          {
+            "path": "memory_representation/knowledge_structure",
+            "quote": "TELEMEM organizes long-term memory as structured, evolvable semantic trajectories using a directed acyclic graph (DAG) G = (V, E).",
+            "found": true
+          }
+        ],
+        "numbers": [],
+        "missingNumbers": [],
+        "reasons": [],
+        "id": "claim-01",
+        "contributedBy": [
+          "Researcher A",
+          "Judge"
+        ]
+      },
+      {
+        "claim": {
+          "claim": "WorldMM constructs multi-scale episodic memory knowledge graphs and a single evolving semantic knowledge graph from video segments.",
+          "sources": [
+            {
+              "path": "memory_architectures",
+              "quote": "WorldMM constructs three complementary memories and selects among them adaptively at query time"
+            }
+          ]
+        },
+        "verified": false,
+        "sources": [
+          {
+            "path": "memory_architectures",
+            "quote": "WorldMM constructs three complementary memories and selects among them adaptively at query time",
+            "found": false,
+            "reason": "quote not found in entry \"memory_architectures\""
+          }
+        ],
+        "numbers": [],
+        "missingNumbers": [],
+        "reasons": [
+          "quote not found in entry \"memory_architectures\""
+        ],
+        "id": "claim-02",
+        "contributedBy": [
+          "Researcher A"
+        ]
+      },
+      {
+        "claim": {
+          "claim": "TELEMEM achieves an accuracy of 86.33% on the ZH-4O benchmark.",
+          "sources": [
+            {
+              "path": "memory_representation/knowledge_structure",
+              "quote": "| TELEMEM | **86.33** |"
+            }
+          ],
+          "result": {
+            "benchmark": "ZH-4O",
+            "dataset": "ZH-4O benchmark",
+            "model": "TELEMEM",
+            "metric": "Accuracy (%)"
+          }
+        },
+        "verified": true,
+        "sources": [
+          {
+            "path": "memory_representation/knowledge_structure",
+            "quote": "| TELEMEM | **86.33** |",
+            "found": true
+          }
+        ],
+        "numbers": [
+          "86.33"
+        ],
+        "missingNumbers": [],
+        "reasons": [],
+        "id": "claim-03",
+        "contributedBy": [
+          "Researcher A"
+        ]
+      },
+      {
+        "claim": {
+          "claim": "On the ZH-4O benchmark, Mem0 achieves an accuracy of 70.20%.",
+          "sources": [
+            {
+              "path": "memory_representation/knowledge_structure",
+              "quote": "| Mem0 | 70.20 |"
+            }
+          ],
+          "result": {
+            "benchmark": "ZH-4O",
+            "dataset": "ZH-4O benchmark",
+            "model": "Mem0",
+            "metric": "Accuracy (%)"
+          }
+        },
+        "verified": true,
+        "sources": [
+          {
+            "path": "memory_representation/knowledge_structure",
+            "quote": "| Mem0 | 70.20 |",
+            "found": true
+          }
+        ],
+        "numbers": [
+          "70.20"
+        ],
+        "missingNumbers": [],
+        "reasons": [],
+        "id": "claim-04",
+        "contributedBy": [
+          "Researcher A",
+          "Judge"
+        ]
+      },
+      {
+        "claim": {
+          "claim": "On the ZH-4O benchmark, RAG achieves an accuracy of 62.45%.",
+          "sources": [
+            {
+              "path": "memory_representation/knowledge_structure",
+              "quote": "| RAG | 62.45 |"
+            }
+          ],
+          "result": {
+            "benchmark": "ZH-4O",
+            "dataset": "ZH-4O benchmark",
+            "model": "RAG",
+            "metric": "Accuracy (%)"
+          }
+        },
+        "verified": true,
+        "sources": [
+          {
+            "path": "memory_representation/knowledge_structure",
+            "quote": "| RAG | 62.45 |",
+            "found": true
+          }
+        ],
+        "numbers": [
+          "62.45"
+        ],
+        "missingNumbers": [],
+        "reasons": [],
+        "id": "claim-05",
+        "contributedBy": [
+          "Researcher A",
+          "Judge"
+        ]
+      },
+      {
+        "claim": {
+          "claim": "TELEMEM reduces token usage by 43% compared to Mem0.",
+          "sources": [
+            {
+              "path": "memory_representation/knowledge_structure",
+              "quote": "TELEMEM outperforms Mem0 by 19% in accuracy, reduces token usage by 43%, and achieves a 2.1× speedup [3]."
+            }
+          ]
+        },
+        "verified": true,
+        "sources": [
+          {
+            "path": "memory_representation/knowledge_structure",
+            "quote": "TELEMEM outperforms Mem0 by 19% in accuracy, reduces token usage by 43%, and achieves a 2.1× speedup [3].",
+            "found": true
+          }
+        ],
+        "numbers": [
+          "43"
+        ],
+        "missingNumbers": [],
+        "reasons": [],
+        "id": "claim-06",
+        "contributedBy": [
+          "Researcher A"
+        ]
+      },
+      {
+        "claim": {
+          "claim": "WorldMM builds episodic memory by partitioning video at temporal scales and converting segments into entity-action-entity triplets.",
+          "sources": [
+            {
+              "path": "memory_architectures",
+              "quote": "Episodic memory construction: video is partitioned at each temporal scale ti ∈ T; each segment is captioned by a video LLM and converted to (entity, action, entity) triplets forming graph G_ti"
+            }
+          ]
+        },
+        "verified": false,
+        "sources": [
+          {
+            "path": "memory_architectures",
+            "quote": "Episodic memory construction: video is partitioned at each temporal scale ti ∈ T; each segment is captioned by a video LLM and converted to (entity, action, entity) triplets forming graph G_ti",
+            "found": false,
+            "reason": "quote not found in entry \"memory_architectures\""
+          }
+        ],
+        "numbers": [],
+        "missingNumbers": [],
+        "reasons": [
+          "quote not found in entry \"memory_architectures\""
+        ],
+        "id": "claim-07",
+        "contributedBy": [
+          "Researcher B"
+        ]
+      },
+      {
+        "claim": {
+          "claim": "M3-Agent maintains episodic memory as concrete timestamped text nodes linked to face and voice entity IDs.",
+          "sources": [
+            {
+              "path": "memory_architectures",
+              "quote": "Episodic memory: concrete timestamped events, e.g., \"Alice takes the coffee and says 'I can't go without this in the morning.'\" Stored as text nodes linked to face/voice entity IDs."
+            }
+          ]
+        },
+        "verified": true,
+        "sources": [
+          {
+            "path": "memory_architectures",
+            "quote": "Episodic memory: concrete timestamped events, e.g., \"Alice takes the coffee and says 'I can't go without this in the morning.'\" Stored as text nodes linked to face/voice entity IDs.",
+            "found": true
+          }
+        ],
+        "numbers": [],
+        "missingNumbers": [],
+        "reasons": [],
+        "id": "claim-08",
+        "contributedBy": [
+          "Researcher B"
+        ]
+      },
+      {
+        "claim": {
+          "claim": "WorldMM achieves 69.5% average accuracy across multiple benchmarks.",
+          "sources": [
+            {
+              "path": "memory_architectures",
+              "quote": "WorldMM-GPT achieves 69.5% average accuracy across EgoLifeQA, Ego-R1 Bench, HippoVlog, LVBench, and Video-MME (Long), outperforming the next-best baseline (HippoRAG at 57.0%) by 8.4%"
+            }
+          ],
+          "result": {
+            "benchmark": "WorldMM-GPT",
+            "dataset": "EgoLifeQA, Ego-R1 Bench, HippoVlog, LVBench, and Video-MME (Long)",
+            "model": "WorldMM-GPT",
+            "metric": "average accuracy"
+          }
+        },
+        "verified": true,
+        "sources": [
+          {
+            "path": "memory_architectures",
+            "quote": "WorldMM-GPT achieves 69.5% average accuracy across EgoLifeQA, Ego-R1 Bench, HippoVlog, LVBench, and Video-MME (Long), outperforming the next-best baseline (HippoRAG at 57.0%) by 8.4%",
+            "found": true
+          }
+        ],
+        "numbers": [
+          "69.5"
+        ],
+        "missingNumbers": [],
+        "reasons": [],
+        "id": "claim-09",
+        "contributedBy": [
+          "Researcher B"
+        ]
+      },
+      {
+        "claim": {
+          "claim": "TELEMEM achieves 86.33% accuracy on the ZH-4O benchmark.",
+          "sources": [
+            {
+              "path": "memory_representation/knowledge_structure",
+              "quote": "On the ZH-4O benchmark (28 human-LLM sessions, avg. 600 turns, 1,068 multiple-choice questions):\n\n| Method | Accuracy (%) |\n|---|---|\n| RAG | 62.45 |\n| Mem0 | 70.20 |\n| MOOM | 72.60 |\n| A-Mem | 73.78 |\n| Memobase | 76.78 |\n| Long context LLM | 84.92 |\n| TELEMEM | 86.33 |"
+            }
+          ],
+          "result": {
+            "benchmark": "ZH-4O",
+            "dataset": "28 human-LLM sessions",
+            "model": "TELEMEM",
+            "metric": "Accuracy (%)"
+          }
+        },
+        "verified": true,
+        "sources": [
+          {
+            "path": "memory_representation/knowledge_structure",
+            "quote": "On the ZH-4O benchmark (28 human-LLM sessions, avg. 600 turns, 1,068 multiple-choice questions):\n\n| Method | Accuracy (%) |\n|---|---|\n| RAG | 62.45 |\n| Mem0 | 70.20 |\n| MOOM | 72.60 |\n| A-Mem | 73.78 |\n| Memobase | 76.78 |\n| Long context LLM | 84.92 |\n| TELEMEM | 86.33 |",
+            "found": true
+          }
+        ],
+        "numbers": [
+          "86.33"
+        ],
+        "missingNumbers": [],
+        "reasons": [],
+        "id": "claim-10",
+        "contributedBy": [
+          "Researcher B"
+        ]
+      },
+      {
+        "claim": {
+          "claim": "WorldMM structures video memory into episodic knowledge graphs using a pipeline of video captioning, named entity recognition, and episodic triplet extraction applied at fixed temporal intervals.",
+          "sources": [
+            {
+              "path": "memory_representation/knowledge_structure",
+              "quote": "WorldMM builds memory through a multi-stage extraction pipeline applied to video segments at fixed intervals (e.g., every 10 seconds) [1]:"
+            }
+          ]
+        },
+        "verified": true,
+        "sources": [
+          {
+            "path": "memory_representation/knowledge_structure",
+            "quote": "WorldMM builds memory through a multi-stage extraction pipeline applied to video segments at fixed intervals (e.g., every 10 seconds) [1]:",
+            "found": true
+          }
+        ],
+        "numbers": [],
+        "missingNumbers": [],
+        "reasons": [],
+        "id": "claim-11",
+        "contributedBy": [
+          "Contradiction Hunter"
+        ]
+      },
+      {
+        "claim": {
+          "claim": "TELEMEM organizes long-term memory using a directed acyclic graph of semantic trajectory nodes, achieving high accuracy and token efficiency compared to alternative memory frameworks.",
+          "sources": [
+            {
+              "path": "memory_representation/knowledge_structure",
+              "quote": "TELEMEM organizes long-term memory as structured, evolvable semantic trajectories using a directed acyclic graph (DAG) G = (V, E) [3]. This contrasts with conventional RAG, which treats memories as independent, unordered fragments."
+            }
+          ]
+        },
+        "verified": true,
+        "sources": [
+          {
+            "path": "memory_representation/knowledge_structure",
+            "quote": "TELEMEM organizes long-term memory as structured, evolvable semantic trajectories using a directed acyclic graph (DAG) G = (V, E) [3]. This contrasts with conventional RAG, which treats memories as independent, unordered fragments.",
+            "found": true
+          }
+        ],
+        "numbers": [],
+        "missingNumbers": [],
+        "reasons": [],
+        "id": "claim-12",
+        "contributedBy": [
+          "Contradiction Hunter"
+        ]
+      },
+      {
+        "claim": {
+          "claim": "TELEMEM outperforms Mem0 by 19% in accuracy while reducing token usage by 43% on the ZH-4O benchmark.",
+          "sources": [
+            {
+              "path": "memory_representation/knowledge_structure",
+              "quote": "TELEMEM outperforms Mem0 by 19% in accuracy, reduces token usage by 43%, and achieves a 2.1× speedup [3]."
+            }
+          ],
+          "result": {
+            "benchmark": "ZH-4O",
+            "dataset": "ZH-4O benchmark",
+            "model": "TELEMEM",
+            "metric": "Accuracy (%)"
+          }
+        },
+        "verified": true,
+        "sources": [
+          {
+            "path": "memory_representation/knowledge_structure",
+            "quote": "TELEMEM outperforms Mem0 by 19% in accuracy, reduces token usage by 43%, and achieves a 2.1× speedup [3].",
+            "found": true
+          }
+        ],
+        "numbers": [
+          "19",
+          "43"
+        ],
+        "missingNumbers": [],
+        "reasons": [],
+        "id": "claim-13",
+        "contributedBy": [
+          "Contradiction Hunter"
+        ]
+      },
+      {
+        "claim": {
+          "claim": "WorldMM-GPT achieves an average accuracy of 69.5% across multiple long-horizon benchmarks including EgoLifeQA, Ego-R1 Bench, HippoVlog, LVBench, and Video-MME (Long).",
+          "sources": [
+            {
+              "path": "memory_architectures",
+              "quote": "WorldMM-GPT achieves 69.5% average accuracy across EgoLifeQA, Ego-R1 Bench, HippoVlog, LVBench, and Video-MME (Long), outperforming the next-best baseline (HippoRAG at 57.0%) by 8.4% [3]."
+            }
+          ],
+          "result": {
+            "benchmark": "Video-MME",
+            "dataset": "EgoLifeQA, Ego-R1 Bench, HippoVlog, LVBench, and Video-MME (Long)",
+            "model": "WorldMM-GPT",
+            "metric": "average accuracy"
+          }
+        },
+        "verified": true,
+        "sources": [
+          {
+            "path": "memory_architectures",
+            "quote": "WorldMM-GPT achieves 69.5% average accuracy across EgoLifeQA, Ego-R1 Bench, HippoVlog, LVBench, and Video-MME (Long), outperforming the next-best baseline (HippoRAG at 57.0%) by 8.4% [3].",
+            "found": true
+          }
+        ],
+        "numbers": [
+          "69.5"
+        ],
+        "missingNumbers": [],
+        "reasons": [],
+        "id": "claim-14",
+        "contributedBy": [
+          "Contradiction Hunter"
+        ]
+      },
+      {
+        "claim": {
+          "claim": "RAG-based video memory retrieval can be implemented as an iterative SEARCH/ANSWER control loop where an agent issues keyword queries against a memory bank.",
+          "sources": [
+            {
+              "path": "memory_retrieval",
+              "quote": "RAG-based video memory retrieval is implemented as an iterative SEARCH/ANSWER control loop: the agent issues keyword-based queries against a memory bank, evaluates whether the accumulated knowledge is sufficient to answer the question, and loops until it can commit to a final answer [1]."
+            }
+          ]
+        },
+        "verified": true,
+        "sources": [
+          {
+            "path": "memory_retrieval",
+            "quote": "RAG-based video memory retrieval is implemented as an iterative SEARCH/ANSWER control loop: the agent issues keyword-based queries against a memory bank, evaluates whether the accumulated knowledge is sufficient to answer the question, and loops until it can commit to a final answer [1].",
+            "found": true
+          }
+        ],
+        "numbers": [],
+        "missingNumbers": [],
+        "reasons": [],
+        "id": "claim-15",
+        "contributedBy": [
+          "Contradiction Hunter"
+        ]
+      },
+      {
+        "claim": {
+          "claim": "WorldMM and TELEMEM represent primary approaches for structuring episodic and semantic memory from long videos and dialogue.",
+          "sources": [
+            {
+              "path": "memory_representation/knowledge_structure",
+              "quote": "Two systems—WorldMM and TELEMEM—represent the primary approaches to structuring episodic and semantic memory for long-horizon video and dialogue reasoning."
+            }
+          ]
+        },
+        "verified": true,
+        "sources": [
+          {
+            "path": "memory_representation/knowledge_structure",
+            "quote": "Two systems—WorldMM and TELEMEM—represent the primary approaches to structuring episodic and semantic memory for long-horizon video and dialogue reasoning.",
+            "found": true
+          }
+        ],
+        "numbers": [],
+        "missingNumbers": [],
+        "reasons": [],
+        "id": "claim-16",
+        "contributedBy": [
+          "Evidence Auditor"
+        ]
+      },
+      {
+        "claim": {
+          "claim": "WorldMM builds episodic memory by applying a multi-stage extraction pipeline to video segments at fixed intervals such as every 10 seconds.",
+          "sources": [
+            {
+              "path": "memory_representation/knowledge_structure",
+              "quote": "WorldMM builds memory through a multi-stage extraction pipeline applied to video segments at fixed intervals (e.g., every 10 seconds)"
+            }
+          ]
+        },
+        "verified": true,
+        "sources": [
+          {
+            "path": "memory_representation/knowledge_structure",
+            "quote": "WorldMM builds memory through a multi-stage extraction pipeline applied to video segments at fixed intervals (e.g., every 10 seconds)",
+            "found": true
+          }
+        ],
+        "numbers": [
+          "10"
+        ],
+        "missingNumbers": [],
+        "reasons": [],
+        "id": "claim-17",
+        "contributedBy": [
+          "Evidence Auditor"
+        ]
+      },
+      {
+        "claim": {
+          "claim": "TELEMEM outperforms Mem0 by 19% in accuracy, reduces token usage by 43%, and achieves a 2.1x speedup on the ZH-4O benchmark.",
+          "sources": [
+            {
+              "path": "memory_representation/knowledge_structure",
+              "quote": "TELEMEM outperforms Mem0 by 19% in accuracy, reduces token usage by 43%, and achieves a 2.1× speedup."
+            }
+          ],
+          "result": {
+            "benchmark": "ZH-4O",
+            "dataset": "ZH-4O benchmark (28 human-LLM sessions, avg. 600 turns, 1,068 multiple-choice questions)",
+            "model": "TELEMEM",
+            "metric": "Accuracy (%)"
+          }
+        },
+        "verified": false,
+        "sources": [
+          {
+            "path": "memory_representation/knowledge_structure",
+            "quote": "TELEMEM outperforms Mem0 by 19% in accuracy, reduces token usage by 43%, and achieves a 2.1× speedup.",
+            "found": true
+          }
+        ],
+        "numbers": [
+          "19",
+          "43",
+          "2"
+        ],
+        "missingNumbers": [
+          "2"
+        ],
+        "reasons": [
+          "number 2 in the claim does not appear in any verified quote"
+        ],
+        "id": "claim-18",
+        "contributedBy": [
+          "Evidence Auditor"
+        ]
+      },
+      {
+        "claim": {
+          "claim": "On the ZH-4O benchmark, RAG achieves 62.45% accuracy.",
+          "sources": [
+            {
+              "path": "memory_representation/knowledge_structure",
+              "quote": "| RAG | 62.45 |"
+            }
+          ],
+          "result": {
+            "benchmark": "ZH-4O",
+            "dataset": "ZH-4O benchmark",
+            "model": "RAG",
+            "metric": "Accuracy (%)"
+          }
+        },
+        "verified": true,
+        "sources": [
+          {
+            "path": "memory_representation/knowledge_structure",
+            "quote": "| RAG | 62.45 |",
+            "found": true
+          }
+        ],
+        "numbers": [
+          "62.45"
+        ],
+        "missingNumbers": [],
+        "reasons": [],
+        "id": "claim-19",
+        "contributedBy": [
+          "Evidence Auditor"
+        ]
+      },
+      {
+        "claim": {
+          "claim": "On the ZH-4O benchmark, TELEMEM achieves 86.33% accuracy.",
+          "sources": [
+            {
+              "path": "memory_representation/knowledge_structure",
+              "quote": "| TELEMEM | **86.33** |"
+            }
+          ],
+          "result": {
+            "benchmark": "ZH-4O",
+            "dataset": "ZH-4O benchmark",
+            "model": "TELEMEM",
+            "metric": "Accuracy (%)"
+          }
+        },
+        "verified": true,
+        "sources": [
+          {
+            "path": "memory_representation/knowledge_structure",
+            "quote": "| TELEMEM | **86.33** |",
+            "found": true
+          }
+        ],
+        "numbers": [
+          "86.33"
+        ],
+        "missingNumbers": [],
+        "reasons": [],
+        "id": "claim-20",
+        "contributedBy": [
+          "Evidence Auditor"
+        ]
+      },
+      {
+        "claim": {
+          "claim": "On the EgoMemReason benchmark, the best model Gemini-3-Flash achieves only 39.6% overall accuracy.",
+          "sources": [
+            {
+              "path": "benchmarks/video_understanding/long_horizon_memory",
+              "quote": "Evaluated on 17 systems (8 general-purpose MLLMs, 5 video-specific MLLMs, 4 agentic frameworks); best model (Gemini-3-Flash) achieves only 39.6% overall accuracy"
+            }
+          ],
+          "result": {
+            "benchmark": "EgoMemReason",
+            "dataset": "week-long egocentric video from the EgoLife dataset",
+            "model": "Gemini-3-Flash",
+            "metric": "overall accuracy"
+          }
+        },
+        "verified": true,
+        "sources": [
+          {
+            "path": "benchmarks/video_understanding/long_horizon_memory",
+            "quote": "Evaluated on 17 systems (8 general-purpose MLLMs, 5 video-specific MLLMs, 4 agentic frameworks); best model (Gemini-3-Flash) achieves only 39.6% overall accuracy",
+            "found": true
+          }
+        ],
+        "numbers": [
+          "3",
+          "39.6"
+        ],
+        "missingNumbers": [],
+        "reasons": [],
+        "id": "claim-21",
+        "contributedBy": [
+          "Evidence Auditor"
+        ]
+      },
+      {
+        "claim": {
+          "claim": "On the ZH-4O benchmark, TELEMEM achieves an accuracy of 86.33%.",
+          "sources": [
+            {
+              "path": "memory_representation/knowledge_structure",
+              "quote": "| TELEMEM | **86.33** |"
+            }
+          ],
+          "result": {
+            "benchmark": "ZH-4O",
+            "dataset": "ZH-4O",
+            "model": "TELEMEM",
+            "metric": "Accuracy (%)"
+          }
+        },
+        "verified": true,
+        "sources": [
+          {
+            "path": "memory_representation/knowledge_structure",
+            "quote": "| TELEMEM | **86.33** |",
+            "found": true
+          }
+        ],
+        "numbers": [
+          "86.33"
+        ],
+        "missingNumbers": [],
+        "reasons": [],
+        "id": "claim-22",
+        "contributedBy": [
+          "Judge"
+        ]
+      },
+      {
+        "claim": {
+          "claim": "WorldMM-GPT achieves an average accuracy of 69.5% across EgoLifeQA, Ego-R1 Bench, HippoVlog, LVBench, and Video-MME (Long).",
+          "sources": [
+            {
+              "path": "memory_architectures",
+              "quote": "WorldMM-GPT achieves 69.5% average accuracy across EgoLifeQA, Ego-R1 Bench, HippoVlog, LVBench, and Video-MME (Long), outperforming the next-best baseline (HippoRAG at 57.0%) by 8.4%"
+            }
+          ],
+          "result": {
+            "benchmark": "Multiple long-horizon benchmarks",
+            "dataset": "EgoLifeQA, Ego-R1 Bench, HippoVlog, LVBench, and Video-MME (Long)",
+            "model": "WorldMM-GPT",
+            "metric": "average accuracy"
+          }
+        },
+        "verified": true,
+        "sources": [
+          {
+            "path": "memory_architectures",
+            "quote": "WorldMM-GPT achieves 69.5% average accuracy across EgoLifeQA, Ego-R1 Bench, HippoVlog, LVBench, and Video-MME (Long), outperforming the next-best baseline (HippoRAG at 57.0%) by 8.4%",
+            "found": true
+          }
+        ],
+        "numbers": [
+          "69.5"
+        ],
+        "missingNumbers": [],
+        "reasons": [],
+        "id": "claim-23",
+        "contributedBy": [
+          "Judge"
+        ]
+      }
+    ],
+    "conflicts": [],
+    "agents": [
+      {
+        "name": "Researcher A",
+        "ok": true,
+        "summary": "Systems like TELEMEM and WorldMM allow long videos to be structured into episodic and semantic memories for reasoning and retrieval. TELEMEM achieves a 43% token reduction compared to Mem0 and outperforms standard RAG and other memory baselines on long-horizon reasoning tasks.",
+        "verified": 5,
+        "total": 6
+      },
+      {
+        "name": "Researcher B",
+        "ok": true,
+        "summary": "Long videos can be turned into episodic and semantic memories using frameworks like WorldMM, M3-Agent, and TELEMEM, which extract structured representations such as RDF triples or DAG nodes. Retrieving these memories typically relies on multi-turn agentic loops or closure-based traversal. However, retrieval effectiveness varies significantly depending on the complexity of the query and the memory architecture used.",
+        "verified": 3,
+        "total": 4
+      },
+      {
+        "name": "Contradiction Hunter",
+        "ok": true,
+        "summary": "Systems such as WorldMM and TELEMEM demonstrate that long videos can indeed be structured into episodic and semantic memories, which can then be retrieved using multi-turn or graph-traversal RAG strategies. However, retrieval ease and accuracy vary significantly depending on the underlying architecture and the complexity of the video domain.",
+        "verified": 5,
+        "total": 5
+      },
+      {
+        "name": "Evidence Auditor",
+        "ok": true,
+        "summary": "Evidence indicates that long videos can be structured into episodic and semantic memories using systems like WorldMM and TELEMEM, and retrieved using multi-turn agentic loops or DAG closure. However, current retrieval and memory systems do not guarantee high accuracy on long-horizon reasoning benchmarks, where even the best evaluated models achieve relatively low scores. The provided evidence does not show a direct head-to-head comparison between all memory frameworks under identical benchmark settings.",
+        "verified": 5,
+        "total": 6
+      }
+    ],
+    "sources": [
+      {
+        "id": "source-01",
+        "path": "memory_retrieval",
+        "score": 33.739999999999995,
+        "passages": [
+          "RAG-based video memory retrieval is implemented as an iterative SEARCH/ANSWER control loop: the agent issues keyword-based queries against a memory bank, evaluates whether the accumulated knowledge is sufficient to answer the question, and loops until it can commit to a final answer [1]."
+        ],
+        "citedClaims": [
+          "claim-15"
+        ]
+      },
+      {
+        "id": "source-02",
+        "path": "memory_representation/knowledge_structure",
+        "score": 27.68,
+        "passages": [
+          "TELEMEM organizes long-term memory as structured, evolvable semantic trajectories using a directed acyclic graph (DAG) G = (V, E).",
+          "| TELEMEM | **86.33** |",
+          "| Mem0 | 70.20 |",
+          "| RAG | 62.45 |",
+          "TELEMEM outperforms Mem0 by 19% in accuracy, reduces token usage by 43%, and achieves a 2.1× speedup [3].",
+          "On the ZH-4O benchmark (28 human-LLM sessions, avg. 600 turns, 1,068 multiple-choice questions):\n\n| Method | Accuracy (%) |\n|---|---|\n| RAG | 62.45 |\n| Mem0 | 70.20 |\n| MOOM | 72.60 |\n| A-Mem | 73.78 |\n| Memobase | 76.78 |\n| Long context LLM | 84.92 |\n| TELEMEM | 86.33 |",
+          "WorldMM builds memory through a multi-stage extraction pipeline applied to video segments at fixed intervals (e.g., every 10 seconds) [1]:",
+          "TELEMEM organizes long-term memory as structured, evolvable semantic trajectories using a directed acyclic graph (DAG) G = (V, E) [3]. This contrasts with conventional RAG, which treats memories as independent, unordered fragments.",
+          "Two systems—WorldMM and TELEMEM—represent the primary approaches to structuring episodic and semantic memory for long-horizon video and dialogue reasoning.",
+          "WorldMM builds memory through a multi-stage extraction pipeline applied to video segments at fixed intervals (e.g., every 10 seconds)",
+          "TELEMEM outperforms Mem0 by 19% in accuracy, reduces token usage by 43%, and achieves a 2.1× speedup."
+        ],
+        "citedClaims": [
+          "claim-01",
+          "claim-03",
+          "claim-04",
+          "claim-05",
+          "claim-06",
+          "claim-10",
+          "claim-11",
+          "claim-12",
+          "claim-13",
+          "claim-16",
+          "claim-17",
+          "claim-18",
+          "claim-19",
+          "claim-20",
+          "claim-22"
+        ]
+      },
+      {
+        "id": "source-03",
+        "path": "benchmarks/video_understanding/long_horizon_memory",
+        "score": 19.47,
+        "passages": [
+          "Evaluated on 17 systems (8 general-purpose MLLMs, 5 video-specific MLLMs, 4 agentic frameworks); best model (Gemini-3-Flash) achieves only 39.6% overall accuracy"
+        ],
+        "citedClaims": [
+          "claim-21"
+        ]
+      },
+      {
+        "id": "source-04",
+        "path": "memory_architectures",
+        "score": 18.99,
+        "passages": [
+          "Episodic memory: concrete timestamped events, e.g., \"Alice takes the coffee and says 'I can't go without this in the morning.'\" Stored as text nodes linked to face/voice entity IDs.",
+          "WorldMM-GPT achieves 69.5% average accuracy across EgoLifeQA, Ego-R1 Bench, HippoVlog, LVBench, and Video-MME (Long), outperforming the next-best baseline (HippoRAG at 57.0%) by 8.4%",
+          "WorldMM-GPT achieves 69.5% average accuracy across EgoLifeQA, Ego-R1 Bench, HippoVlog, LVBench, and Video-MME (Long), outperforming the next-best baseline (HippoRAG at 57.0%) by 8.4% [3]."
+        ],
+        "citedClaims": [
+          "claim-02",
+          "claim-07",
+          "claim-08",
+          "claim-09",
+          "claim-14",
+          "claim-23"
+        ]
+      },
+      {
+        "id": "source-05",
+        "path": "benchmarks/video_understanding/spatial_reasoning",
+        "score": 16.23,
+        "passages": [],
+        "citedClaims": []
+      }
+    ]
+  }
+}

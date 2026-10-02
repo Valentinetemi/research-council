@@ -1,6 +1,21 @@
 // Collects evidence for a question in plain code: keyword searches + reads over MCP, no LLM involved.
 
 export type Entry = { path: string; score: number; text: string }
+export type RelevanceThresholds = {
+  minEntries: number
+  minTopScore: number
+  minTotalScore: number
+  minMatchedTerms: number
+  minTermCoverage: number
+}
+export type RelevanceAssessment = {
+  sufficient: boolean
+  topScore: number
+  totalScore: number
+  matchedTerms: string[]
+  termCoverage: number
+  areas: string[]
+}
 
 type McpTool = { execute?: (input: any, options: any) => unknown }
 type ToolResult = { isError?: boolean; content?: { type: string; text?: string }[] }
@@ -13,6 +28,47 @@ const STOPWORDS = new Set(
 export function keywords(question: string): string[] {
   const words = question.toLowerCase().replace(/[^\p{L}\p{N}\s-]/gu, ' ').split(/\s+/)
   return [...new Set(words.filter((w) => w.length > 2 && !STOPWORDS.has(w)))]
+}
+
+export const DEFAULT_RELEVANCE_THRESHOLDS: RelevanceThresholds = {
+  minEntries: 2,
+  minTopScore: 10,
+  minTotalScore: 25,
+  minMatchedTerms: 2,
+  minTermCoverage: 0.2,
+}
+
+const researchArea = (path: string) => path.split('/')[0].replaceAll('_', ' ')
+
+// Fail-closed retrieval gate. It combines search confidence with literal topic coverage so a
+// semantically weak result set cannot trigger the research agents merely because it returned hits.
+export function assessEvidenceRelevance(
+  question: string,
+  entries: Entry[],
+  thresholds: RelevanceThresholds = DEFAULT_RELEVANCE_THRESHOLDS,
+): RelevanceAssessment {
+  const terms = keywords(question)
+  const corpus = entries.map((entry) => entry.text.toLowerCase()).join('\n')
+  const matchedTerms = terms.filter((term) => corpus.includes(term))
+  const scores = entries.map((entry) => entry.score).sort((a, b) => b - a)
+  const topScore = scores[0] ?? 0
+  const totalScore = scores.reduce((total, score) => total + score, 0)
+  const termCoverage = terms.length === 0 ? 0 : matchedTerms.length / terms.length
+  const requiredMatches = Math.min(thresholds.minMatchedTerms, terms.length)
+
+  return {
+    sufficient:
+      entries.length >= thresholds.minEntries &&
+      topScore >= thresholds.minTopScore &&
+      totalScore >= thresholds.minTotalScore &&
+      matchedTerms.length >= requiredMatches &&
+      termCoverage >= thresholds.minTermCoverage,
+    topScore,
+    totalScore,
+    matchedTerms,
+    termCoverage,
+    areas: [...new Set(entries.map((entry) => researchArea(entry.path)))].slice(0, 5),
+  }
 }
 
 async function call(tool: McpTool, input: unknown): Promise<string> {

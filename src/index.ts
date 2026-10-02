@@ -3,7 +3,13 @@ import { join } from 'node:path'
 import { pathToFileURL } from 'node:url'
 import { createMCPClient } from '@ai-sdk/mcp'
 import { runCouncil, type AgentResult, type JudgeOutput } from './council.js'
-import { collectEvidence, type Entry } from './evidence.js'
+import {
+  assessEvidenceRelevance,
+  collectEvidence,
+  DEFAULT_RELEVANCE_THRESHOLDS,
+  type Entry,
+  type RelevanceAssessment,
+} from './evidence.js'
 import { unbackedNumbers, verifyClaim, type Claim, type Verdict } from './verify.js'
 
 export const DEFAULT_QUESTION =
@@ -22,6 +28,26 @@ export type Run = {
   agents: AgentResult[]
   judge: JudgeOutput
 }
+
+export class OutsideCollectionError extends Error {
+  constructor(public readonly assessment: RelevanceAssessment) {
+    super('The available research collection does not contain enough relevant evidence to investigate this question reliably.')
+    this.name = 'OutsideCollectionError'
+  }
+}
+
+const numberFromEnv = (name: string, fallback: number) => {
+  const value = Number(process.env[name])
+  return Number.isFinite(value) ? value : fallback
+}
+
+const relevanceThresholds = () => ({
+  minEntries: numberFromEnv('RETRIEVAL_MIN_ENTRIES', DEFAULT_RELEVANCE_THRESHOLDS.minEntries),
+  minTopScore: numberFromEnv('RETRIEVAL_MIN_TOP_SCORE', DEFAULT_RELEVANCE_THRESHOLDS.minTopScore),
+  minTotalScore: numberFromEnv('RETRIEVAL_MIN_TOTAL_SCORE', DEFAULT_RELEVANCE_THRESHOLDS.minTotalScore),
+  minMatchedTerms: numberFromEnv('RETRIEVAL_MIN_MATCHED_TERMS', DEFAULT_RELEVANCE_THRESHOLDS.minMatchedTerms),
+  minTermCoverage: numberFromEnv('RETRIEVAL_MIN_TERM_COVERAGE', DEFAULT_RELEVANCE_THRESHOLDS.minTermCoverage),
+})
 
 function requireEnv(name: string): string {
   const value = process.env[name]
@@ -61,7 +87,18 @@ export async function liveRun(
   } finally {
     await mcpClient.close()
   }
-  if (evidence.length === 0) throw new Error('No relevant entries found; not calling the model.')
+  const relevance = assessEvidenceRelevance(question, evidence, relevanceThresholds())
+  if (!relevance.sufficient) {
+    log(
+      `Retrieval gate rejected the question (top score ${relevance.topScore.toFixed(1)}, ` +
+        `${relevance.matchedTerms.length} matched terms). No model calls were made.`,
+    )
+    throw new OutsideCollectionError(relevance)
+  }
+  log(
+    `Retrieval gate passed (top score ${relevance.topScore.toFixed(1)}, ` +
+      `${Math.round(relevance.termCoverage * 100)}% term coverage).`,
+  )
 
   const { agents, judge } = await runCouncil(MODEL, question, evidence, log)
   const run: Run = { createdAt: new Date().toISOString(), question, model: MODEL, knowledgeBase, evidence, agents, judge }

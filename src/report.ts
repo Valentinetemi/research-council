@@ -55,7 +55,16 @@ function verifiedClaims(run: Run): ReportClaim[] {
 }
 
 function agentSummary(agent: AgentResult, run: Run) {
-  if (!agent.ok) return { name: agent.name, ok: false as const, error: agent.error, summary: '', verified: 0, total: 0 }
+  if (!agent.ok) {
+    return {
+      name: agent.name,
+      ok: false as const,
+      error: 'Agent did not complete this investigation.',
+      summary: '',
+      verified: 0,
+      total: 0,
+    }
+  }
   const entries = new Map(run.evidence.map((entry) => [entry.path, entry.text]))
   const checked = agent.output.claims.map((claim) => verifyClaim(claim, entries))
   return {
@@ -105,7 +114,6 @@ export function buildPublicReport(run: Run) {
     createdAt: run.createdAt,
     question: run.question,
     model: run.model,
-    knowledgeBase: run.knowledgeBase,
     verdict: run.judge.verdict,
     verdictLabel: labelForVerdict(run.judge.verdict),
     reasoning: run.judge.reasoning,
@@ -120,12 +128,26 @@ export function buildPublicReport(run: Run) {
     claims,
     conflicts: conflictGroups(claims),
     agents: run.agents.map((agent) => agentSummary(agent, run)),
-    sources: run.evidence.map((entry, index) => ({
-      id: `source-${String(index + 1).padStart(2, '0')}`,
-      path: entry.path,
-      score: entry.score,
-      text: entry.text,
-      characters: entry.text.length,
-    })),
+    // Public reports contain only passages explicitly cited by the council. The full
+    // knowledge-base document and its private identifier never cross the API boundary.
+    sources: run.evidence.map((entry, index) => {
+      const citedClaims = claims.filter((claim) => claim.sources.some((source) => source.path === entry.path))
+      const passages = [
+        ...new Set(
+          citedClaims.flatMap((claim) =>
+            claim.sources
+              .filter((source) => source.path === entry.path && source.found)
+              .map((source) => source.quote),
+          ),
+        ),
+      ]
+      return {
+        id: `source-${String(index + 1).padStart(2, '0')}`,
+        path: entry.path,
+        score: entry.score,
+        passages,
+        citedClaims: citedClaims.map((claim) => claim.id),
+      }
+    }),
   }
 }

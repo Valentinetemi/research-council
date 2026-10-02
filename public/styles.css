@@ -345,6 +345,13 @@ button {
   background: var(--green);
 }
 
+.primary-button:disabled {
+  cursor: not-allowed;
+  border-color: var(--line-dark);
+  background: var(--paper-deep);
+  color: var(--faint);
+}
+
 .primary-button svg,
 .back-button svg,
 .icon-button svg,
@@ -469,7 +476,7 @@ button {
   padding: 62px 40px 100px;
 }
 
-.section-title-row {
+  .section-title-row {
   display: flex;
   align-items: end;
   justify-content: space-between;
@@ -507,6 +514,14 @@ button {
 
 .text-button:hover {
   color: var(--ink);
+}
+
+.section-note {
+  color: var(--faint);
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 
 .run-list {
@@ -689,6 +704,69 @@ button {
   color: var(--muted);
   font-size: 13px;
   line-height: 1.75;
+}
+
+.outside-panel {
+  display: grid;
+  grid-template-columns: minmax(350px, 1.2fr) minmax(300px, .8fr);
+  align-items: center;
+  gap: 9vw;
+  max-width: 1120px;
+  min-height: calc(100vh - 128px);
+  margin: 0 auto;
+  padding: 100px 48px;
+}
+
+.outside-copy .eyebrow {
+  color: var(--amber);
+}
+
+.outside-copy h1 {
+  max-width: 650px;
+  margin: 0;
+  font-size: clamp(36px, 4vw, 54px);
+  font-weight: 430;
+  letter-spacing: -0.05em;
+  line-height: 1.05;
+}
+
+.outside-copy > p:last-child {
+  max-width: 620px;
+  margin: 28px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.75;
+}
+
+.outside-details {
+  padding: 18px 0;
+  border-top: 2px solid var(--ink);
+  border-bottom: 1px solid var(--line-dark);
+}
+
+.outside-details > span {
+  display: block;
+  color: var(--faint);
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+#outside-areas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin: 18px 0 28px;
+}
+
+#outside-areas span {
+  padding: 6px 8px;
+  border: 1px solid var(--line);
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 9px;
+  text-transform: capitalize;
 }
 
 .run-progress {
@@ -2228,6 +2306,10 @@ button {
   .running-panel {
     gap: 6vw;
   }
+
+  .outside-panel {
+    gap: 6vw;
+  }
 }
 
 @media (max-width: 760px) {
@@ -2279,6 +2361,10 @@ button {
 
   .composer-footer {
     justify-content: flex-end;
+  }
+
+  .section-note {
+    display: none;
   }
 
   .suggestions {
@@ -2357,7 +2443,8 @@ button {
     display: none;
   }
 
-  .running-panel {
+  .running-panel,
+  .outside-panel {
     display: block;
     padding: 60px 20px 75px;
   }
@@ -2367,6 +2454,10 @@ button {
   }
 
   .run-progress {
+    margin-top: 55px;
+  }
+
+  .outside-details {
     margin-top: 55px;
   }
 
